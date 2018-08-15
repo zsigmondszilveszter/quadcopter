@@ -1,17 +1,13 @@
-### Szilveszter's Documentations for the different parts of the Quadcopter project
+# Szilveszter's Documentations for the different parts of the Quadcopter project
 
 
-##Szilveszter's Xilinx-Digilent Zybo 7000 Board
-# ############################################################
-# compile device tree
-# ############################################################
+## Szilveszter's Xilinx-Digilent Zybo 7000 Board
+### compile device tree
 dtc -I dts -O dtb -o devicetree.dtb system-top.dts
 
 
-# ############################################################
 ## compile Xilinx's or Mainline linux kernel with Szilveszter's own build chaintools
-# ############################################################
-# Dependencies
+### Dependencies
 1. Cross compilation build tool
 
 2. u-boot bootloader and tools
