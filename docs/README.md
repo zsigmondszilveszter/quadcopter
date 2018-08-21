@@ -6,7 +6,7 @@
 dtc -I dts -O dtb -o devicetree.dtb system-top.dts
 
 
-## compile Xilinx's or Mainline linux kernel with Szilveszter's own build chaintools
+## compile Xilinx's or Mainline linux kernel with Szilveszter's my own self built chaintool
 ### Dependencies
 1. Cross compilation build tool
 

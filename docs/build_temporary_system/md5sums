@@ -9,9 +9,9 @@ c342201de104cc9ce0a21e0ad10d4021  bison-3.0.4.tar.xz
 00b516f4704d4a7cb50a1d97e6e8e15b  bzip2-1.0.6.tar.gz
 31b17c6075820a434119592941186f70  check-0.12.0.tar.gz
 960cfe75a42c9907c71439f8eb436303  coreutils-8.29.tar.xz
-89745b5a6c45c26751dcf673d912f745  dbus-1.12.4.tar.gz
 2ac8405a4c7ca8611d004fe852966c6f  dejagnu-1.6.1.tar.gz
 07cf286672ced26fba54cd0313bdc071  diffutils-3.6.tar.xz
+6ca08c0e14380f87df8e8aceac123671  eudev-3.2.5.tar.gz
 8749ba4fbc25d1b13753b79f1f84b69d  e2fsprogs-1.43.9.tar.gz
 03599aee98c9b726c7a732a2dd0245d5  elfutils-0.170.tar.bz2
 789e297f547980fc9ecc036f9a070d49  expat-2.2.5.tar.bz2
@@ -37,6 +37,7 @@ cc825fa64bc7306a885f2fb2268d3ec5  groff-1.22.3.tar.gz
 c1635a5a83b63aca7f97a3eab39ebaa6  kbd-2.0.4.tar.xz
 34f325cab568f842fdde4f8b2182f220  kmod-25.tar.xz
 6a39bccf420c946b0fd7ffc64961315b  less-530.tar.gz
+8a9f3d5aab3f77a70fef0773e8bc7b2b  lfs-bootscripts-20170626.tar.bz2
 6666b839e5d46c2ad33fc8aa2ceb5f77  libcap-2.25.tar.xz
 83b89587607e3eb65c70d361f13bab43  libffi-3.2.1.tar.gz
 b7437a5020190cfa84f09c412db38902  libpipeline-1.5.0.tar.gz
@@ -62,12 +63,13 @@ bbba1f701c02fb50d59540d1ff90d8d1  psmisc-23.1.tar.xz
 205b03a87fc83dab653b628c59b9fc91  readline-7.0.tar.gz
 e0c583d4c380059abd818cd540fe6938  sed-4.4.tar.xz
 c350da50c2120de6bb29177699d89fe3  shadow-4.5.tar.xz
-5a835ddc2a2ae9ef523a5a11674a6713  systemd-237.tar.gz
-8b1b53cff433d99288ce17be775bc44c  systemd-man-pages-237.tar.xz
+c70599ab0d037fde724f7210c2c8d7f8  sysklogd-1.5.1.tar.gz
+6eda8a97b86e0a6f59dabbf25202aa6f  sysvinit-2.88dsf.tar.bz2
 2d01c6cd1387be98f57a0ec4e6e35826  tar-1.30.tar.xz
 81656d3367af032e0ae6157eff134f89  tcl8.6.8-src.tar.gz
 3715197e62e0e07f85860b3d7aab55ed  texinfo-6.5.tar.xz
 c412b1531adef1be7a645ab734f86acc  tzdata2018c.tar.gz
+d92afb0c6e8e616792068ee4737b0d24  udev-lfs-20171102.tar.bz2
 7733b583dcb51518944d42aa62ef19ea  util-linux-2.31.1.tar.xz
 b35e794140c196ff59b492b56c1e73db  vim-8.0.586.tar.bz2
 af4813fe3952362451201ced6fbce379  XML-Parser-2.44.tar.gz
@@ -78,3 +80,4 @@ a9404fb575dfd5514f3c8f4120f9ca7d  coreutils-8.29-i18n-1.patch
 9a5997c3452909b1769918c759eff8a2  glibc-2.27-fhs-1.patch
 f75cca16a38da6caa7d52151f7136895  kbd-2.0.4-backspace-1.patch
 f537a633532492e805aa342fa869ca45  ninja-1.8.2-add_NINJAJOBS_var-1.patch
+0b7b5ea568a878fdcc4057b2bf36e5cb  sysvinit-2.88dsf-consolidated-1.patch

@@ -41,6 +41,7 @@ set +h
 umask 022
 CLFS_DIR=armv6_clfs
 LFS=/mnt/$CLFS_DIR
+CORE_COUNT=3
 LC_ALL=POSIX
 LFS_TGT=$(uname -m)-lfs-linux-gnu
 PATH=/tools/bin:/bin:/usr/bin
@@ -58,12 +59,12 @@ cd binutils-2.31/
 mkdir -v build
 cd build
 
-../configure --prefix=/tools
-    --with-sysroot=$LFS
-    --with-lib-path=/tools/lib
-    --target=$LFS_TGT
-    --disable-nls
-    --disable-werror
+../configure --prefix=/tools \
+ --with-sysroot=$LFS \
+ --with-lib-path=/tools/lib \
+ --target=$LFS_TGT \
+ --disable-nls \
+ --disable-werror
 
 make -j$CORE_COUNT
 make install
@@ -286,7 +287,7 @@ rm -rf gcc-8.2.0
 #***********************************************************************************************
 # 5.11. Tcl-core-8.6.8
 tar -xf tcl8.6.8-src.tar.gz
-cd tcl8.6.8-src
+cd tcl8.6.8
 
 cd unix
 ./configure --prefix=/tools
@@ -298,8 +299,8 @@ chmod -v u+w /tools/lib/libtcl8.6.so
 make install-private-headers
 ln -sv tclsh8.6 /tools/bin/tclsh
 
-cd ..
-rm -rf tcl8.6.8-src
+cd ../..
+rm -rf tcl8.6.8
 
 
 
@@ -399,7 +400,7 @@ rm -rf bash-4.4.18
 #***********************************************************************************************
 # 5.17. Bison-3.0.4
 tar -xf bison-3.0.4.tar.xz
-cd bison-3.0.4.tar.xz
+cd bison-3.0.4
 
 ./configure --prefix=/tools
 
@@ -522,7 +523,7 @@ make -C src xgettext
 
 cp -v src/{msgfmt,msgmerge,xgettext} /tools/bin
 
-cd ..
+cd ../..
 rm -rf gettext-0.19.8.1
 
 
