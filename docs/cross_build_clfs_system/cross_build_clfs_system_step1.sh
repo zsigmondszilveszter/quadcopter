@@ -1,26 +1,8 @@
-## put this into the user's bash_profile
-export CLFS_DIR=armv6_clfs
-export LFS=/mnt/$CLFS_DIR 
-export CORE_COUNT=3
+# make sure you are logged in with root
 
-export CLFS_FLOAT="hard"
-export CLFS_FPU="vfpv2"
-export CLFS_HOST="i686-cross-linux-gnu"
-export CLFS_TARGET="arm-szilv-linux-gnueabihf"
-export CLFS_ARCH="arm"
-export CLFS_ARM_ARCH="armv6"
-
-export CC="${CLFS_TARGET}-gcc"
-export CXX="${CLFS_TARGET}-g++"
-export AR="${CLFS_TARGET}-ar"
-export AS="${CLFS_TARGET}-as"
-export LD="${CLFS_TARGET}-ld"
-export RANLIB="${CLFS_TARGET}-ranlib"
-export READELF="${CLFS_TARGET}-readelf"
-export STRIP="${CLFS_TARGET}-strip"
-export CROSS_COMPILE=${CLFS_TARGET}-
-export ARCH=${CLFS_ARCH}
-
+chown -R root:root $LFS/tools
+chown -R root:root $LFS/sources
+chown -R root:root $LFS/ctools
 
 # enter to the newly created temporary system and cross toolchain
 mkdir -pv $LFS/{dev,proc,sys,run}
@@ -44,6 +26,7 @@ chroot "$LFS" /tools/bin/env -i \
 
 mkdir -pv /{bin,boot,etc/{opt,sysconfig},home,lib/firmware,mnt,opt}
 mkdir -pv /{media/{floppy,cdrom},sbin,srv,var}
+install -dv -m 0750 /root
 install -dv -m 1777 /tmp /var/tmp
 mkdir -pv /usr/{,local/}{bin,include,lib,sbin,src}
 mkdir -pv /usr/{,local/}share/{color,dict,doc,info,locale,man}
@@ -98,14 +81,50 @@ mail:x:34:
 nogroup:x:99:
 users:x:999:
 EOF
+
+cat > /root/.bash_profile << "EOF"
+export CLFS_DIR=armv6_clfs
+export LFS=/mnt/$CLFS_DIR 
+export CORE_COUNT=3
+
+export CLFS_FLOAT="hard"
+export CLFS_FPU="vfpv2"
+export CLFS_HOST="i686-cross-linux-gnu"
+export CLFS_TARGET="arm-szilv-linux-gnueabihf"
+export CLFS_ARCH="arm"
+export CLFS_ARM_ARCH="armv6z"
+
+export CC="${CLFS_TARGET}-gcc"
+export CXX="${CLFS_TARGET}-g++"
+export AR="${CLFS_TARGET}-ar"
+export AS="${CLFS_TARGET}-as"
+export LD="${CLFS_TARGET}-ld"
+export RANLIB="${CLFS_TARGET}-ranlib"
+export READELF="${CLFS_TARGET}-readelf"
+export STRIP="${CLFS_TARGET}-strip"
+export CROSS_COMPILE=${CLFS_TARGET}-
+export ARCH=${CLFS_ARCH}
+EOF
 exec /tools/bin/bash --login +h
 
 
+cd /sources
 #***********************************************************************************************
 #>> LINUX HEADERS <<
 
-tar -xf linux-4.18.1.tar.xz
-cd linux-4.18.1
+# tar -xf linux-4.18.1.tar.xz
+# cd linux-4.18.1
+
+# make mrproper
+# make ARCH=$CLFS_ARCH INSTALL_HDR_PATH=dest headers_install
+# find dest/include \( -name .install -o -name ..install.cmd \) -delete
+# cp -rv dest/include/* /usr/include
+
+# cd ..
+# rm -rf linux-4.18.1
+
+tar -xf linux-4.14.67.tar.xz
+cd linux-4.14.67
 
 make mrproper
 make ARCH=$CLFS_ARCH INSTALL_HDR_PATH=dest headers_install
@@ -113,7 +132,7 @@ find dest/include \( -name .install -o -name ..install.cmd \) -delete
 cp -rv dest/include/* /usr/include
 
 cd ..
-rm -rf linux-4.18.1
+rm -rf linux-4.14.67
 
 #***********************************************************************************************
 #>> GLIBC <<
@@ -124,7 +143,7 @@ cd glibc-2.27
 patch -Np1 -i ../glibc-2.27-fhs-1.patch
 ln -sfv /ctools/lib/gcc /usr/lib
 
-GCC_INCDIR=/usr/lib/gcc/arm-szilv-linux-gnueabihf/7.3.0/include
+GCC_INCDIR=/usr/lib/gcc/arm-szilv-linux-gnueabihf/8.2.0/include
 ln -sfv ld-linux-armhf.so.3 /lib/ld-lsb.so.3
 
 rm -f /usr/include/limits.h
@@ -142,7 +161,7 @@ CC="$CLFS_TARGET-gcc -isystem $GCC_INCDIR -isystem /usr/include" \
  libc_cv_slibdir=/lib
 unset GCC_INCDIR
 
-make -j3
+make -j$CORE_COUNT
 make install
 
 touch /etc/ld.so.conf
@@ -170,11 +189,13 @@ mkdir -pv /etc/ld.so.conf.d
 #ln -sv /ctools/bin/ld /ctools/$CLFS_TARGET/bin/ld
 #ln -sv /ctools/bin/$CLFS_TARGET-ld /ctools/$CLFS_TARGET/bin/ld
 
-#$CLFS_TARGET-gcc -dumpspecs | sed -e 's@/ctools@@g' \
-# -e '/\*startfile_prefix_spec:/{n;s@.*@/usr/lib/ @}' \
-# -e '/\*cpp:/{n;s@$@ -isystem /usr/include@}' > \
-# `dirname $($CLFS_TARGET-gcc --print-libgcc-file-name)`/specs
+#insert the new /usr/include directory to the beginning of the cross GCC include path list
+$CLFS_TARGET-gcc -dumpspecs | sed -e 's@/ctools@@g' \
+ -e '/\*startfile_prefix_spec:/{n;s@.*@/usr/lib/ @}' \
+ -e '/\*cpp:/{n;s@$@ -isystem /usr/include@}' > \
+ `dirname $($CLFS_TARGET-gcc --print-libgcc-file-name)`/specs
 
+#echo 'int main(){}' > dummy.c
 #$CLFS_TARGET-cc dummy.c -v -Wl,--verbose &> dummy.log
 #readelf -l a.out
 
@@ -192,7 +213,7 @@ tar -xf zlib-1.2.11.tar.xz
 cd zlib-1.2.11
 
 CHOST=${CLFS_TARGET} ./configure --prefix=/usr
-make -j3
+make -j$CORE_COUNT
 make install
 
 mv -v /usr/lib/libz.so.* /lib
@@ -209,7 +230,7 @@ tar -xf file-5.32.tar.gz
 cd file-5.32
 
 ./configure --prefix=/usr --host=$CLFS_TARGET
-make -j3
+make -j$CORE_COUNT
 make install
 
 cd ..
@@ -223,7 +244,7 @@ tar -xf readline-7.0.tar.gz
 cd readline-7.0
 
 ./configure --prefix=/usr  --disable-static  --docdir=/usr/share/doc/readline-7.0 --host=$CLFS_TARGET
-make -j3
+make -j$CORE_COUNT
 make install
 
 mv -v /usr/lib/lib{readline,history}.so.* /lib
@@ -241,7 +262,7 @@ tar -xf m4-1.4.18.tar.xz
 cd m4-1.4.18
 
 ./configure --prefix=/usr --host=$CLFS_TARGET
-make -j3
+make -j$CORE_COUNT
 make install
 
 cd ..
@@ -250,8 +271,8 @@ rm -rf m4-1.4.18
 #***********************************************************************************************
 #>> Binutils <<
 
-tar -xf binutils-2.30.tar.xz
-cd binutils-2.30
+tar -xf binutils-2.31.tar.xz
+cd binutils-2.31
 
 mkdir -v build
 cd build
@@ -266,11 +287,11 @@ cd build
  --with-system-zlib \
  --host=$CLFS_TARGET \
  --target=$CLFS_TARGET
-make -j3 tooldir=/usr
+make -j$CORE_COUNT tooldir=/usr
 make tooldir=/usr install
 
 cd ../..
-rm -rf binutils-2.30
+rm -rf binutils-2.31
 
 #***********************************************************************************************
 #>> GMP <<
@@ -283,7 +304,7 @@ cd gmp-6.1.2
  --disable-static \
  --docdir=/usr/share/doc/gmp-6.1.2 \
  --host=$CLFS_TARGET
-make -j3
+make -j$CORE_COUNT
 make install
 
 cd ..
@@ -302,7 +323,7 @@ cd mpfr-4.0.1
  --enable-thread-safe \
  --docdir=/usr/share/doc/mpfr-4.0.1 \
  --host=$CLFS_TARGET
-make -j3
+make -j$CORE_COUNT
 make install
 
 cd ..
@@ -319,7 +340,7 @@ cd mpc-1.1.0
  --disable-static \
  --docdir=/usr/share/doc/mpc-1.1.0 \
  --host=$CLFS_TARGET
-make -j3
+make -j$CORE_COUNT
 make install
 
 cd ..
@@ -329,8 +350,8 @@ rm -rf mpc-1.1.0
 #***********************************************************************************************
 #>> GCC <<
 
-tar -xf gcc-7.3.0.tar.xz
-cd gcc-7.3.0
+tar -xf gcc-8.2.0.tar.xz
+cd gcc-8.2.0
 
 rm -f /usr/lib/gcc
 mkdir -v build
@@ -347,19 +368,19 @@ SED=sed \
  --with-arch=${CLFS_ARM_ARCH} \
  --with-float=${CLFS_FLOAT} \
  --with-fpu=${CLFS_FPU}
-make -j3
+make -j$CORE_COUNT
 make install
 
 ln -sv ../usr/bin/cpp /lib
 ln -sv gcc /usr/bin/cc
 install -v -dm755 /usr/lib/bfd-plugins
-ln -sfv ../../libexec/gcc/arm-szilv-linux-gnueabihf/7.3.0/liblto_plugin.so \
+ln -sfv ../../libexec/gcc/arm-szilv-linux-gnueabihf/8.2.0/liblto_plugin.so \
  /usr/lib/bfd-plugins/
 mkdir -pv /usr/share/gdb/auto-load/usr/lib
 mv -v /usr/lib/*gdb.py /usr/share/gdb/auto-load/usr/lib
 
 cd ../..
-rm -rf gcc-7.3.0
+rm -rf gcc-8.2.0
 
 
 #***********************************************************************************************
@@ -374,7 +395,7 @@ sed -i "s@(PREFIX)/man@(PREFIX)/share/man@g" Makefile
 
 make -f Makefile-libbz2_so CC="${CC}" AR="${AR}" RANLIB="${RANLIB}"
 make clean
-make -j3 CC="${CC}" AR="${AR}" RANLIB="${RANLIB}"
+make -j$CORE_COUNT CC="${CC}" AR="${AR}" RANLIB="${RANLIB}"
 make PREFIX=/usr install
 cp -v bzip2-shared /bin/bzip2
 cp -av libbz2.so* /lib
@@ -411,7 +432,7 @@ echo ac_cv_func_posix_getgrgid_r=yes>>$CLFS_TARGET.cache
  --host=$CLFS_TARGET \
  --target=$CLFS_TARGET \
  --cache-file=$CLFS_TARGET.cache
-make -j3
+make -j$CORE_COUNT
 make install
 
 cd ..
@@ -438,7 +459,7 @@ sed -i '/LIBTOOL_INSTALL/d' c++/Makefile.in
  --enable-widec \
  --disable-stripping
 
-make -j3
+make -j$CORE_COUNT
 make install
 
 mv -v /usr/lib/libncursesw.so.6* /lib
@@ -474,7 +495,7 @@ sed -i 's:{(:\\{(:' test/run
  --target=$CLFS_TARGET \
  --disable-static
 
-make -j3
+make -j$CORE_COUNT
 make install install-dev install-lib
 chmod -v 755 /usr/lib/libattr.so
 mv -v /usr/lib/libattr.so.* /lib
@@ -505,7 +526,7 @@ sed -i -e "/TABS-1;/a if (x > (TABS-1)) x = (TABS-1);" \
  --disable-static \
  --libexecdir=/usr/lib
 
-make -j3
+make -j$CORE_COUNT
 make install install-dev install-lib
 chmod -v 755 /usr/lib/libacl.so
 mv -v /usr/lib/libacl.so.* /lib
@@ -528,7 +549,7 @@ sed -i 's/testsuite.panic-tests.sh//' Makefile.in
  --host=$CLFS_TARGET \
  --target=$CLFS_TARGET
 
-make -j3
+make -j$CORE_COUNT
 make install
 
 cd ..
@@ -553,7 +574,7 @@ sed -i -e 's@#ENCRYPT_METHOD DES@ENCRYPT_METHOD SHA512@' \
 sed -i 's/1000/999/' etc/useradd
 
 ./configure --sysconfdir=/etc --with-group-name-max-length=32 --host=$CLFS_TARGET
-make -j3
+make -j$CORE_COUNT
 make install
 mv -v /usr/bin/passwd /bin
 
@@ -571,7 +592,7 @@ tar -xf bison-3.0.4.tar.xz
 cd bison-3.0.4 
 
 ./configure --prefix=/usr --docdir=/usr/share/doc/bison-3.0.4 --host=$CLFS_TARGET --target=$CLFS_TARGET
-make -j3
+make -j$CORE_COUNT
 make install
 
 cd ..
@@ -590,7 +611,7 @@ cd flex-2.6.4
 sed -i "/math.h/a #include <malloc.h>" src/flexdef.h
 HELP2MAN=/tools/bin/true \
 ./configure --prefix=/usr --docdir=/usr/share/doc/flex-2.6.4 --host=$CLFS_TARGET --target=$CLFS_TARGET
-make -j3
+make -j$CORE_COUNT
 make install
 
 ln -sv flex /usr/bin/lex
@@ -609,7 +630,7 @@ tar -xf grep-3.1.tar.xz
 cd grep-3.1	
 
 ./configure --prefix=/usr --bindir=/bin --host=$CLFS_TARGET --target=$CLFS_TARGET
-make -j3
+make -j$CORE_COUNT
 make install
 
 cd ..
@@ -620,7 +641,7 @@ rm -rf grep-3.1
 
 
 #***********************************************************************************************
-#>> Bash <<
+#>> Bash << REINSTALL at step2!!!
 
 
 tar -xf bash-4.4.18.tar.gz
@@ -632,7 +653,7 @@ cd bash-4.4.18
  --host=$CLFS_TARGET --target=$CLFS_TARGET \
  --with-installed-readline
 
-make -j3
+make -j$CORE_COUNT
 make install
 
 mv -vf /usr/bin/bash /bin
@@ -641,7 +662,7 @@ cd ..
 rm -rf bash-4.4.18
 
 
-# !!! reset the sh link mv /bin/sh_bak /bin/sh
+# !!! reset the sh link ln -svf /tools/bin/bash /bin/sh
 
 
 #***********************************************************************************************
@@ -652,7 +673,7 @@ cd gperf-3.1
 
 ./configure --prefix=/usr --docdir=/usr/share/doc/gperf-3.1 --host=$CLFS_TARGET --target=$CLFS_TARGET
 
-make -j3
+make -j$CORE_COUNT
 make install
 
 cd ..
@@ -672,7 +693,7 @@ sed -i 's|usr/bin/env |bin/|' run.sh.in
 
 ./configure --prefix=/usr --disable-static --host=$CLFS_TARGET --target=$CLFS_TARGET
 
-make -j3
+make -j$CORE_COUNT
 make install
 
 cd ..
@@ -689,7 +710,7 @@ cd autoconf-2.69
 ./configure --prefix=/usr --host=$CLFS_TARGET --target=$CLFS_TARGET
 
 
-make -j3
+make -j$CORE_COUNT
 make install
 
 cd ..
@@ -707,7 +728,7 @@ cd automake-1.15.1
 
 ./configure --prefix=/usr --docdir=/usr/share/doc/automake-1.15.1 --host=$CLFS_TARGET --target=$CLFS_TARGET
 
-make -j3
+make -j$CORE_COUNT
 make install
 
 cd ..
@@ -727,7 +748,7 @@ cd xz-5.2.3
  --disable-static \
  --docdir=/usr/share/doc/xz-5.2.3
 
-make -j3
+make -j$CORE_COUNT
 make install
 mv -v /usr/bin/{lzma,unlzma,lzcat,xz,unxz,xzcat} /bin
 mv -v /usr/lib/liblzma.so.* /lib
@@ -748,7 +769,7 @@ cd gettext-0.19.8.1
  --disable-static \
  --docdir=/usr/share/doc/gettext-0.19.8.1
 
-make -j3
+make -j$CORE_COUNT
 make install
 chmod -v 0755 /usr/lib/preloadable_libintl.so
 
@@ -770,7 +791,7 @@ sed -e '/^includedir/ s/=.*$/=@includedir@/' \
  -i libffi.pc.in
 
 ./configure --prefix=/usr --disable-static --host=$CLFS_TARGET
-make -j3
+make -j$CORE_COUNT
 make install
 
 cd ..
@@ -792,7 +813,7 @@ FORCE_UNSAFE_CONFIGURE=1 ./configure \
  --prefix=/usr \
  --enable-no-install-program=kill,uptime
 
-FORCE_UNSAFE_CONFIGURE=1 make -j3
+FORCE_UNSAFE_CONFIGURE=1 make -j$CORE_COUNT
 make install
 
 mv -v /usr/bin/{cat,chgrp,chmod,chown,cp,date,dd,df,echo} /bin
@@ -817,7 +838,7 @@ tar -xf check-0.12.0.tar.gz
 cd check-0.12.0
 
 ./configure --prefix=/usr --host=$CLFS_TARGET --target=$CLFS_TARGET
-make -j3
+make -j$CORE_COUNT
 make install
 
 cd ..
@@ -835,7 +856,7 @@ cd diffutils-3.6
 
 ./configure --prefix=/usr --host=$CLFS_TARGET --build=$CLFS_HOST gl_cv_func_getopt_gnu=yes
 
-make -j3 
+make -j$CORE_COUNT 
 make install
 
 cd ..
@@ -856,7 +877,7 @@ sed -i 's/extras//' Makefile.in
 
 ./configure --prefix=/usr --host=$CLFS_TARGET --target=$CLFS_TARGET
 
-make -j3
+make -j$CORE_COUNT
 make install
 
 cd ..
@@ -874,7 +895,7 @@ cd findutils-4.6.0
 
 ./configure --prefix=/usr --localstatedir=/var/lib/locate --host=$CLFS_TARGET --build=$CLFS_HOST 
 
-make -j3
+make -j$CORE_COUNT
 make install
 
 mv -v /usr/bin/find /bin
@@ -893,7 +914,7 @@ cd less-530
 
 ./configure --prefix=/usr --sysconfdir=/etc --host=$CLFS_TARGET --target=$CLFS_TARGET
 
-make -j3
+make -j$CORE_COUNT
 make install
 
 cd ..
@@ -912,7 +933,7 @@ cd gzip-1.9
 
 ./configure --prefix=/usr --host=$CLFS_TARGET --target=$CLFS_TARGET
 
-make -j3
+make -j$CORE_COUNT
 make install
 mv -v /usr/bin/gzip /bin
 
@@ -930,7 +951,7 @@ sed -i '211,217 d; 219,229 d; 232 d' glob/glob.c
 
 ./configure --prefix=/usr --host=$CLFS_TARGET --target=$CLFS_TARGET
 
-make -j3
+make -j$CORE_COUNT
 make install
 
 cd ..
@@ -949,7 +970,7 @@ cd patch-2.7.6
 
 ./configure --prefix=/usr --host=$CLFS_TARGET --target=$CLFS_TARGET
 
-make -j3
+make -j$CORE_COUNT
 make install
 
 cd ..
@@ -970,3 +991,15 @@ make -C src install
 
 cd ..
 rm -rf sysvinit-2.88dsf
+
+
+#***********************************************************************************************
+#>> LFS-Bootscripts << 
+
+tar -xf lfs-bootscripts-20170626.tar.bz2
+cd lfs-bootscripts-20170626
+
+make install
+
+cd ..
+rm -rf lfs-bootscripts-20170626

@@ -2,7 +2,6 @@
 export CLFS_DIR=armv6_clfs
 ## Settings the $LFS variable
 export LFS=/mnt/$CLFS_DIR 
-export CORE_COUNT=3
 
 source ~/.bash_profile
 
@@ -45,7 +44,7 @@ CORE_COUNT=3
 LC_ALL=POSIX
 LFS_TGT=$(uname -m)-lfs-linux-gnu
 PATH=/tools/bin:/bin:/usr/bin
-export LFS LC_ALL LFS_TGT PATH
+export LFS LC_ALL LFS_TGT PATH CORE_COUNT
 EOF
 
 source ~/.bash_profile

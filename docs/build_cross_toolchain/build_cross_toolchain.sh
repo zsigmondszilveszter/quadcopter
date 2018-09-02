@@ -1,10 +1,24 @@
-# configure the target system and set environment variable
+# it is not neccessary if we are already logged in with lfs user
+mkdir -v $LFS/ctools
+unlink /ctools
+ln -sv $LFS/ctools /
 
-## put this into the user's bash_profile
-export CLFS_DIR=armv6_clfs
-export LFS=/mnt/$CLFS_DIR 
-export CORE_COUNT=3
-export PATH=/ctools/bin:$PATH
+chown -v lfs $LFS/tools
+chown -v lfs $LFS/sources
+chown -v lfs $LFS/ctools
+su - lfs
+
+
+cat > ~/.bashrc << "EOF"
+set +h
+umask 022
+CLFS_DIR=armv6_clfs
+LFS=/mnt/$CLFS_DIR
+CORE_COUNT=3
+LC_ALL=POSIX
+LFS_TGT=$(uname -m)-lfs-linux-gnu
+PATH=/tools/bin:/ctools/bin:/bin:/usr/bin
+export LFS LC_ALL LFS_TGT PATH CORE_COUNT
 
 export CLFS_HOST="i686-cross-linux-gnu"
 export CLFS_TARGET="arm-szilv-linux-gnueabihf"
@@ -12,16 +26,9 @@ export CLFS_ARCH="arm"
 export CLFS_ARM_ARCH="armv6z"
 export CLFS_FLOAT="hard"
 export CLFS_FPU="vfpv2"
-
-
-
-chown -R root:root $LFS/tools
-chown -R root:root $LFS/sources
-
-# clfs tools directory
-mkdir -v $LFS/ctools
-unlink /ctools
-ln -sv $LFS/ctools /
+EOF
+source ~/.bashrc
+source ~/.bash_profile
 
 
 
@@ -135,6 +142,7 @@ make install
 
 cd ../..
 rm -rf glibc-2.27
+
 
 
 
