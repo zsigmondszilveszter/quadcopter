@@ -10,8 +10,6 @@
 # After you are logged in, make a temporary directory and copy the half-done system with RSYNC command
 TMP_CLFS="/root/tmp_clfs_szilv"
 REMOTE_CLFS="/mnt/armv6_clfs"
-REMOTE_SD_CARD_BOOT="root@192.168.1.7:/run/media/szilveszter/BOOT"
-REMOTE_SD_CARD_ROOT="root@192.168.1.7:/run/media/szilveszter/ROOT"
 mkdir $TMP_CLFS
 cd $TMP_CLFS
 
@@ -36,10 +34,7 @@ rsync -avP --numeric-ids --exclude=/dev --exclude=/run --exclude=/sys \
 mkdir sources
 cd sources
 # run them ony by one
-rsync -avP root@192.168.1.199:$REMOTE_CLFS/sources/bash-4.4.18.tar.gz .
-# we have to extract them, because in chroot environment there is no tar yet
-tar -xf bash-4.4.18.tar.gz
-tar -xf util-linux-2.31.1.tar.xz
+rsync -avP root@192.168.1.199:$REMOTE_CLFS/sources/util-linux-2.31.1.tar.xz .
 cd ..
 
 
@@ -54,35 +49,12 @@ cd /sources
 
 
 
-# First of all, we have to recompile bash, I don't know why,
-# but with the cross-compiled version some compilations silently fails
-#***********************************************************************************************
-#>> Bash <<  
-#tar -xf bash-4.4.18.tar.gz
-cd bash-4.4.18
-
-
-./configure --prefix=/usr \
- --docdir=/usr/share/doc/bash-4.4.18 \
- --without-bash-malloc \
- --with-installed-readline
-
-make -j$CORE_COUNT
-make install
-mv -vf /usr/bin/bash /bin
-exec /bin/bash --login +h
-
-
-cd ..
-rm -rf bash-4.4.18
-
-
-
 
 #***********************************************************************************************
 #>> Util-linux
-
 exit # exit the chroot environment, there is no util-linux yet and util-linux cannot compile without util-linux installed(more precisely I couldnt)
+CORE_COUNT=4
+cd $TMP_CLFS/sources
 
 tar -xf util-linux-2.31.1.tar.xz
 cd util-linux-2.31.1
@@ -106,8 +78,20 @@ mkdir -pv /var/lib/hwclock
 make -j$CORE_COUNT
 make install DESTDIR=$TMP_CLFS
 
+# if the above install command fails try to install to different directory and copy 
+# the content manually later on
+# make install DESTDIR=$TMP_CLFS/sources/tmp
+
+
 cd ..
 rm -rf util-linux-2.31.1
+
+# cd tmp
+# rsync -avP * $TMP_CLFS/
+# cd ..
+# rm -rf tmp
+
+
 
 
 
@@ -115,6 +99,9 @@ rm -rf util-linux-2.31.1
 
 # enter to the chroot environment
 chroot ~/tmp_clfs_szilv
+
+ln -svf /bin/bash /bin/sh
+rm /root/.bash_profile
 
 # shadow, enable and create root pw, etc.
 pwconv
@@ -154,7 +141,42 @@ CLOCKPARAMS=
 # End /etc/sysconfig/clock
 EOF
 
+cat > /etc/fstab << "EOF"
+# Begin /etc/fstab
+# file system mount-point type options dump fsck
+# order
+/dev/mmcblk0p1 / ext4 defaults 1 1
+/dev/mmcblk0p2 /boot vfat auto,umask=0 0 0
+proc /proc proc nosuid,noexec,nodev 0 0
+sysfs /sys sysfs nosuid,noexec,nodev 0 0
+devpts /dev/pts devpts gid=5,mode=620 0 0
+tmpfs /run tmpfs defaults 0 0
+devtmpfs /dev devtmpfs mode=0755,nosuid 0 0
+# End /etc/fstab
+EOF
+
+
+exit
 # copy the compiled system to the SD card root partition
 rsync -avP --numeric-ids --exclude=/dev --exclude=/run --exclude=/sys \
  --exclude=/proc --exclude=/ctools --exclude=/sources --exclude=/tools \
- root@192.168.1.7:$TMP_CLFS/* $REMOTE_SD_CARD_ROOT
+ $TMP_CLFS/* root@192.168.1.7:/run/media/szilveszter/ROOT
+
+
+
+
+
+
+
+
+
+
+# don't forget to create the dev sys proc run folders on root partition
+# this must be done on the machine where the SDCARD is mounted in
+mkdir -pv /run/media/szilveszter/ROOT/{dev,proc,sys,run}
+
+
+# and copy the remaining source files to SDCARD's root partiiton
+mkdir /run/media/szilveszter/ROOT/sources
+rsync -avP root@192.168.1.199:/mnt/armv6_clfs/sources/tar-1.30.tar.xz /run/media/szilveszter/ROOT/sources
+rsync -avP root@192.168.1.199:/mnt/armv6_clfs/sources/bash-4.4.18.tar.gz /run/media/szilveszter/ROOT/sources

@@ -27,7 +27,7 @@ useradd -s /bin/bash -g lfs -m -k /dev/null lfs
 # password
 passwd lfs
 
-chown -v lfs $LFS/tools
+chown -vR lfs $LFS/tools
 chown -v lfs $LFS/sources
 su - lfs
 
@@ -50,6 +50,7 @@ EOF
 source ~/.bash_profile
 
 
+cd  $LFS/sources
 #***********************************************************************************************
 #5.4. Binutils-2.31.1 - Pass 1
 tar -xf binutils-2.31.tar.xz
@@ -74,8 +75,8 @@ rm -rf binutils-2.31/
 
 #***********************************************************************************************
 #5.5. GCC-8.2.0 - Pass 1
-tar -xf gcc-8.2.0.tar.xz
-cd gcc-8.2.0
+tar -xf gcc-7.3.0.tar.xz
+cd gcc-7.3.0
 
 tar -xf ../mpfr-4.0.1.tar.xz
 mv -v mpfr-4.0.1 mpfr
@@ -127,20 +128,20 @@ make -j$CORE_COUNT
 make install
 
 cd ../..
-rm -rf gcc-8.2.0
+rm -rf gcc-7.3.0
 
 
 #***********************************************************************************************
 # 5.6. Linux-4.15.3 API Headers
-tar -xf linux-4.18.1.tar.xz
-cd linux-4.18.1
+tar -xf linux-4.18.5.tar.xz
+cd linux-4.18.5
 
 make mrproper
 make INSTALL_HDR_PATH=dest headers_install
 cp -rv dest/include/* /tools/include
 
 cd ..
-rm -rf linux-4.18.1
+rm -rf linux-4.18.5
 
 
 #***********************************************************************************************
@@ -175,8 +176,8 @@ rm -rf glibc-2.27
 
 #***********************************************************************************************
 # 5.8. Libstdc++-8.2.0
-tar -xf gcc-8.2.0.tar.xz
-cd gcc-8.2.0
+tar -xf gcc-7.3.0.tar.xz
+cd gcc-7.3.0
 
 mkdir -v build
 cd build
@@ -188,13 +189,13 @@ cd build
  --disable-nls \
  --disable-libstdcxx-threads \
  --disable-libstdcxx-pch \
- --with-gxx-include-dir=/tools/$LFS_TGT/include/c++/8.2.0
+ --with-gxx-include-dir=/tools/$LFS_TGT/include/c++/7.3.0
 
 make -j$CORE_COUNT
 make install
 
 cd ../..
-rm -rf gcc-8.2.0
+rm -rf gcc-7.3.0
 
 
 #***********************************************************************************************
@@ -228,8 +229,8 @@ rm -rf binutils-2.31
 
 #***********************************************************************************************
 # 5.10. GCC-8.2.0 - Pass 2
-tar -xf gcc-8.2.0.tar.xz
-cd gcc-8.2.0
+tar -xf gcc-7.3.0.tar.xz
+cd gcc-7.3.0
 
 cat gcc/limitx.h gcc/glimits.h gcc/limity.h > \
  `dirname $($LFS_TGT-gcc -print-libgcc-file-name)`/include-fixed/limits.h
@@ -275,13 +276,13 @@ make -j$CORE_COUNT
 make install
 ln -sv gcc /tools/bin/cc
 
-echo 'int main(){}' > dummy.c
-cc dummy.c
-readelf -l a.out | grep ': /tools'
+# echo 'int main(){}' > dummy.c
+# cc dummy.c
+# readelf -l a.out | grep ': /tools'
 rm -v dummy.c a.out
 
 cd ../..
-rm -rf gcc-8.2.0
+rm -rf gcc-7.3.0
 
 #***********************************************************************************************
 # 5.11. Tcl-core-8.6.8
@@ -292,7 +293,6 @@ cd unix
 ./configure --prefix=/tools
 
 make -j$CORE_COUNT
-TZ=UTC make test
 make install
 chmod -v u+w /tools/lib/libtcl8.6.so
 make install-private-headers

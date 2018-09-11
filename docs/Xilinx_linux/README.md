@@ -17,11 +17,11 @@ dtc -I dts -O dtb -o devicetree.dtb system-top.dts
 	export ARCH=arm
 
 4. Compilation:
-	# clean git repository, git commit
+# clean git repository, git commit
 	make mrproper
-	# in the case of a Xilinx FPGA SOC: make xilinx_zynq_defconfig
+# in the case of a Xilinx FPGA SOC: make xilinx_zynq_defconfig
 	make menuconfig (or copy in a preconfigured .config file)
-	# inspect and edit .config file
+# inspect and edit .config file
 	make -j3 UIMAGE_LOADADDR=0x8000 uImage
 	make INSTALL_MOD_PATH=xy modules
 	make INSTALL_MOD_PATH=xy modules_install

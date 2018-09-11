@@ -1,4 +1,5 @@
-# it is not neccessary if we are already logged in with lfs user
+# run as root
+rm -rf $LFS/ctools
 mkdir -v $LFS/ctools
 unlink /ctools
 ln -sv $LFS/ctools /
@@ -32,7 +33,7 @@ source ~/.bash_profile
 
 
 
-# Build cross toolchain in the previously built temporary system
+# Build cross toolchain with the previously built temporary system
 cd $LFS/sources
 #***********************************************************************************************
 #>> BINUTILS <<
@@ -58,8 +59,8 @@ rm -rf binutils-2.31
 #***********************************************************************************************
 #>> GCC <<
 
-tar -xf gcc-8.2.0.tar.xz
-cd gcc-8.2.0
+tar -xf gcc-7.3.0.tar.xz
+cd gcc-7.3.0
 
 tar -xf ../mpfr-4.0.1.tar.xz
 mv -v mpfr-4.0.1 mpfr
@@ -102,21 +103,21 @@ make -j$CORE_COUNT
 make install
 
 cd ../..
-rm -rf gcc-8.2.0
+rm -rf gcc-7.3.0
 
 
 
 #***********************************************************************************************
 #>> LINUX HEADERS <<
-tar -xf linux-4.18.1.tar.xz
-cd linux-4.18.1
+tar -xf linux-4.18.5.tar.xz
+cd linux-4.18.5
 
 make mrproper
 make ARCH=$CLFS_ARCH headers_check
 make ARCH=$CLFS_ARCH INSTALL_HDR_PATH=/ctools/$CLFS_TARGET headers_install
 
 cd ..
-rm -rf linux-4.18.1
+rm -rf linux-4.18.5
 
 
 
@@ -149,8 +150,8 @@ rm -rf glibc-2.27
 #***********************************************************************************************
 #>> LIBSTDC++ <<
 
-tar -xf gcc-8.2.0.tar.xz
-cd gcc-8.2.0
+tar -xf gcc-7.3.0.tar.xz
+cd gcc-7.3.0
 
 mkdir -v build
 cd build
@@ -163,12 +164,12 @@ cd build
  --disable-nls \
  --disable-libstdcxx-threads \
  --disable-libstdcxx-pch \
- --with-gxx-include-dir=/ctools/$CLFS_TARGET/include/c++/8.2.0
+ --with-gxx-include-dir=/ctools/$CLFS_TARGET/include/c++/7.3.0
 make -j$CORE_COUNT
 make install
 
 cd ../..
-rm -rf gcc-8.2.0
+rm -rf gcc-7.3.0
 
 
 
@@ -204,8 +205,8 @@ rm -rf binutils-2.31
 #***********************************************************************************************
 #>> GCC pass2<<
 
-tar -xf gcc-8.2.0.tar.xz
-cd gcc-8.2.0
+tar -xf gcc-7.3.0.tar.xz
+cd gcc-7.3.0
 
 cat gcc/limitx.h gcc/glimits.h gcc/limity.h > \
  `dirname $($CLFS_TARGET-gcc -print-libgcc-file-name)`/include-fixed/limits.h
@@ -243,4 +244,4 @@ make install
 ln -sv $CLFS_TARGET-gcc /ctools/bin/$CLFS_TARGET-cc
 
 cd ../..
-rm -rf gcc-8.2.0
+rm -rf gcc-7.3.0

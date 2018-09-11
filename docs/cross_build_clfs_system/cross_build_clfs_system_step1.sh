@@ -112,27 +112,18 @@ cd /sources
 #***********************************************************************************************
 #>> LINUX HEADERS <<
 
-# tar -xf linux-4.18.1.tar.xz
-# cd linux-4.18.1
+tar -xf linux-4.18.5.tar.xz
+cd linux-4.18.5
 
-# make mrproper
-# make ARCH=$CLFS_ARCH INSTALL_HDR_PATH=dest headers_install
-# find dest/include \( -name .install -o -name ..install.cmd \) -delete
-# cp -rv dest/include/* /usr/include
 
-# cd ..
-# rm -rf linux-4.18.1
-
-tar -xf linux-4.14.67.tar.xz
-cd linux-4.14.67
-
-make mrproper
-make ARCH=$CLFS_ARCH INSTALL_HDR_PATH=dest headers_install
+make INSTALL_HDR_PATH=dest headers_install
 find dest/include \( -name .install -o -name ..install.cmd \) -delete
 cp -rv dest/include/* /usr/include
 
+
 cd ..
-rm -rf linux-4.14.67
+rm -rf linux-4.18.5
+
 
 #***********************************************************************************************
 #>> GLIBC <<
@@ -180,14 +171,11 @@ EOF
 mkdir -pv /etc/ld.so.conf.d
 
 
-#mv -v /ctools/bin/{ld,ld-old}
-#mv -v /ctools/bin/{$CLFS_TARGET-ld,$CLFS_TARGET-ld-old}
-#mv -v /ctools/$CLFS_TARGET/bin/{ld,ld-old}
-#mv -v /ctools/$CLFS_TARGET/bin/{ld,ld-old}
-#mv -v /ctools/bin/{ld-new,ld}
-#mv -v /ctools/bin/{$CLFS_TARGET-ld-new,$CLFS_TARGET-ld}
-#ln -sv /ctools/bin/ld /ctools/$CLFS_TARGET/bin/ld
-#ln -sv /ctools/bin/$CLFS_TARGET-ld /ctools/$CLFS_TARGET/bin/ld
+# comment out if it is the first time a toolchain is used
+mv -v /ctools/bin/{$CLFS_TARGET-ld,$CLFS_TARGET-ld-old}
+mv -v /ctools/$CLFS_TARGET/bin/{ld,ld-old}
+mv -v /ctools/bin/{$CLFS_TARGET-ld-new,$CLFS_TARGET-ld}
+ln -sv /ctools/bin/$CLFS_TARGET-ld /ctools/$CLFS_TARGET/bin/ld
 
 #insert the new /usr/include directory to the beginning of the cross GCC include path list
 $CLFS_TARGET-gcc -dumpspecs | sed -e 's@/ctools@@g' \
@@ -202,7 +190,7 @@ $CLFS_TARGET-gcc -dumpspecs | sed -e 's@/ctools@@g' \
 cd ../..
 rm -rf glibc-2.27
 
-# !!!! TO RETURN !!!!
+# !!!! TO RETURN !!!! and do the skipped parts
 
 
 
@@ -350,8 +338,40 @@ rm -rf mpc-1.1.0
 #***********************************************************************************************
 #>> GCC <<
 
-tar -xf gcc-8.2.0.tar.xz
-cd gcc-8.2.0
+# tar -xf gcc-8.2.0.tar.xz
+# cd gcc-8.2.0
+
+# rm -f /usr/lib/gcc
+# mkdir -v build
+# cd build
+# SED=sed \
+# ../configure --prefix=/usr \
+#  --enable-languages=c,c++ \
+#  --disable-multilib \
+#  --disable-bootstrap \
+#  --with-system-zlib \
+#  --host=$CLFS_TARGET \
+#  --build=$CLFS_HOST \
+#  --target=$CLFS_TARGET \
+#  --with-arch=${CLFS_ARM_ARCH} \
+#  --with-float=${CLFS_FLOAT} \
+#  --with-fpu=${CLFS_FPU}
+# make -j$CORE_COUNT
+# make install
+
+# ln -sv ../usr/bin/cpp /lib
+# ln -sv gcc /usr/bin/cc
+# install -v -dm755 /usr/lib/bfd-plugins
+# ln -sfv ../../libexec/gcc/arm-szilv-linux-gnueabihf/8.2.0/liblto_plugin.so \
+#  /usr/lib/bfd-plugins/
+# mkdir -pv /usr/share/gdb/auto-load/usr/lib
+# mv -v /usr/lib/*gdb.py /usr/share/gdb/auto-load/usr/lib
+
+# cd ../..
+# rm -rf gcc-8.2.0
+
+tar -xf gcc-7.3.0.tar.xz
+cd gcc-7.3.0
 
 rm -f /usr/lib/gcc
 mkdir -v build
@@ -374,17 +394,17 @@ make install
 ln -sv ../usr/bin/cpp /lib
 ln -sv gcc /usr/bin/cc
 install -v -dm755 /usr/lib/bfd-plugins
-ln -sfv ../../libexec/gcc/arm-szilv-linux-gnueabihf/8.2.0/liblto_plugin.so \
+ln -sfv ../../libexec/gcc/arm-szilv-linux-gnueabihf/7.3.0/liblto_plugin.so \
  /usr/lib/bfd-plugins/
 mkdir -pv /usr/share/gdb/auto-load/usr/lib
 mv -v /usr/lib/*gdb.py /usr/share/gdb/auto-load/usr/lib
 
 cd ../..
-rm -rf gcc-8.2.0
+rm -rf gcc-7.3.0
 
 
 #***********************************************************************************************
-#>> Bzip <<
+#>> Bzip << TO RETURN!!!
 
 tar -xf bzip2-1.0.6.tar.gz
 cd bzip2-1.0.6
@@ -641,7 +661,7 @@ rm -rf grep-3.1
 
 
 #***********************************************************************************************
-#>> Bash << REINSTALL at step2!!!
+#>> Bash << REINSTALL at step3!!!
 
 
 tar -xf bash-4.4.18.tar.gz
@@ -662,7 +682,8 @@ cd ..
 rm -rf bash-4.4.18
 
 
-# !!! reset the sh link ln -svf /tools/bin/bash /bin/sh
+# !!! reset the sh link 
+ln -svf /tools/bin/bash /bin/sh
 
 
 #***********************************************************************************************
@@ -1003,3 +1024,22 @@ make install
 
 cd ..
 rm -rf lfs-bootscripts-20170626
+
+
+
+#***********************************************************************************************
+#>> Tar <<
+tar -xf tar-1.30.tar.xz
+cd tar-1.30
+
+FORCE_UNSAFE_CONFIGURE=1 \
+./configure --prefix=/usr \
+ --bindir=/bin \
+ --host=$CLFS_TARGET --target=$CLFS_TARGET
+ 
+
+make -j$CORE_COUNT
+make install
+
+cd ..
+rm -rf tar-1.30

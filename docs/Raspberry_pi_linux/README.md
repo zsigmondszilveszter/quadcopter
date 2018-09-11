@@ -32,8 +32,8 @@ rsync firmware/boot/{bootcode.bin,fixup.dat,start.elf} root@192.168.1.7:/run/med
 # 5. compile linux
 # download linux kernel, extract it and change the current directory to it
 cd $LFS/sources
-tar -xf linux-4.18.1.tar.xz
-cd linux-4.18.1/
+tar -xf linux-4.18.5.tar.xz
+cd linux-4.18.5/
 
 make bcm2835_defconfig
 # inspect and edit .config file if it is neccessary
