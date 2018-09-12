@@ -169,14 +169,3 @@ rsync -avP --numeric-ids --exclude=/dev --exclude=/run --exclude=/sys \
 
 
 
-
-
-# don't forget to create the dev sys proc run folders on root partition
-# this must be done on the machine where the SDCARD is mounted in
-mkdir -pv /run/media/szilveszter/ROOT/{dev,proc,sys,run}
-
-
-# and copy the remaining source files to SDCARD's root partiiton
-mkdir /run/media/szilveszter/ROOT/sources
-rsync -avP root@192.168.1.199:/mnt/armv6_clfs/sources/tar-1.30.tar.xz /run/media/szilveszter/ROOT/sources
-rsync -avP root@192.168.1.199:/mnt/armv6_clfs/sources/bash-4.4.18.tar.gz /run/media/szilveszter/ROOT/sources

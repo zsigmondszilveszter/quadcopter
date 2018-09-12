@@ -338,38 +338,6 @@ rm -rf mpc-1.1.0
 #***********************************************************************************************
 #>> GCC <<
 
-# tar -xf gcc-8.2.0.tar.xz
-# cd gcc-8.2.0
-
-# rm -f /usr/lib/gcc
-# mkdir -v build
-# cd build
-# SED=sed \
-# ../configure --prefix=/usr \
-#  --enable-languages=c,c++ \
-#  --disable-multilib \
-#  --disable-bootstrap \
-#  --with-system-zlib \
-#  --host=$CLFS_TARGET \
-#  --build=$CLFS_HOST \
-#  --target=$CLFS_TARGET \
-#  --with-arch=${CLFS_ARM_ARCH} \
-#  --with-float=${CLFS_FLOAT} \
-#  --with-fpu=${CLFS_FPU}
-# make -j$CORE_COUNT
-# make install
-
-# ln -sv ../usr/bin/cpp /lib
-# ln -sv gcc /usr/bin/cc
-# install -v -dm755 /usr/lib/bfd-plugins
-# ln -sfv ../../libexec/gcc/arm-szilv-linux-gnueabihf/8.2.0/liblto_plugin.so \
-#  /usr/lib/bfd-plugins/
-# mkdir -pv /usr/share/gdb/auto-load/usr/lib
-# mv -v /usr/lib/*gdb.py /usr/share/gdb/auto-load/usr/lib
-
-# cd ../..
-# rm -rf gcc-8.2.0
-
 tar -xf gcc-7.3.0.tar.xz
 cd gcc-7.3.0
 
