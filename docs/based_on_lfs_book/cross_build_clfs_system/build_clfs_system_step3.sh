@@ -31,6 +31,7 @@ Python-3.6.4.tar.xz,\
 ninja-1.8.2.tar.gz,\
 meson-0.44.0.tar.gz,\
 procps-ng-3.3.12.tar.xz,\
+dosfstools-4.1.tar.xz,\
 e2fsprogs-1.43.9.tar.gz,\
 groff-1.22.3.tar.gz,\
 iproute2-4.15.0.tar.xz,\
@@ -423,6 +424,24 @@ rm -rf procps-ng-3.3.12
 
 
 #***********************************************************************************************
+#>> dosfstools-4.1 << 
+tar -xf dosfstools-4.1.tar.xz
+cd dosfstools-4.1
+
+./configure --prefix=/               \
+            --enable-compat-symlinks \
+            --mandir=/usr/share/man  \
+            --docdir=/usr/share/doc/dosfstools-4.1
+make -j$CORE_COUNT
+make install
+
+cd ..
+rm -rf dosfstools-4.1
+
+
+
+
+#***********************************************************************************************
 #>> 6.55. E2fsprogs-1.43.9 << 
 tar -xf e2fsprogs-1.43.9.tar.gz
 cd e2fsprogs-1.43.9
@@ -451,7 +470,7 @@ chmod -v u+w /usr/lib/{libcom_err,libe2p,libext2fs,libss}.a
 gunzip -v /usr/share/info/libext2fs.info.gz
 install-info --dir-file=/usr/share/info/dir /usr/share/info/libext2fs.info
 
-cd ..
+cd ../..
 rm -rf e2fsprogs-1.43.9
 
 

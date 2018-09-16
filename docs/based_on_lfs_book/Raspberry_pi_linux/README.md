@@ -15,7 +15,7 @@ cd $LFS/sources
 # 2. U-boot for raspberry pi zero w - make sure CROSS_COMPILE and other enviroment variables are set (test with echo $CROSS_COMPILE)
 git clone --depth 1 -b v2016.09.01 git://git.denx.de/u-boot.git
 cd u-boot
-#defconfig for raspberry pi zero w, it can change for any other supported board (see in u-boot's config folder)
+#defconfig for raspberry pi zero w, it can change for any other supported board (see in u-boot's configs folder)
 make rpi_0_w_defconfig
 make -j$CORE_COUNT
 # Now, copy the u-boot.bin file onto the SD card's /boot drirectory, and call it kernel.img (this is what the bootloader(first stage bootloader, bootcode.bin from Broadcom) looks for).
