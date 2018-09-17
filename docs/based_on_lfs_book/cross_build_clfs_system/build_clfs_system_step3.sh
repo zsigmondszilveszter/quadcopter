@@ -205,6 +205,9 @@ echo "127.0.0.1 localhost $(hostname)" > /etc/hosts
 export BUILD_ZLIB=False
 export BUILD_BZIP2=0
 
+# remove perl link which is pointing to non existent /tools directory
+rm /usr/bin/perl
+
 sh Configure -des -Dprefix=/usr \
  -Dvendorprefix=/usr \
  -Dman1dir=/usr/share/man/man1 \
