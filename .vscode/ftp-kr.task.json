@@ -1,20 +1,16 @@
 {
- "/.gitignore": "upload",
- "/docs/based_on_lfs_book/build_cross_toolchain/build_cross_toolchain.sh": "upload",
- "/docs/based_on_lfs_book/build_cross_toolchain": "upload",
- "/docs/based_on_lfs_book/build_temporary_system/build_temporary_system.sh": "upload",
- "/docs/based_on_lfs_book/build_temporary_system/md5sums": "upload",
- "/docs/based_on_lfs_book/build_temporary_system/version-check.sh": "upload",
- "/docs/based_on_lfs_book/build_temporary_system/wget-list": "upload",
- "/docs/based_on_lfs_book/cross_build_clfs_system/build_clfs_blfs_step4.sh": "upload",
- "/docs/based_on_lfs_book/cross_build_clfs_system/build_clfs_system_step3.sh": "upload",
- "/docs/based_on_lfs_book/cross_build_clfs_system/build_cross_clfs_system_step1.sh": "upload",
- "/docs/based_on_lfs_book/cross_build_clfs_system/build_cross_clfs_system_step2.sh": "upload",
- "/docs/based_on_lfs_book/LFS-BOOK-8.2.pdf": "upload",
- "/docs/based_on_lfs_book/Raspberry_pi_linux/README.md": "upload",
- "/docs/based_on_lfs_book/Xilinx_linux/README.md": "upload",
- "/docs/based_on_lfs_book": "upload",
- "/docs/own_cross_compilation/README.md": "upload",
- "/README.md": "upload",
- "/src/main.c": "upload"
+ "host": "192.168.10.200",
+ "username": "quadcopter",
+ "remotePath": "fpga_server",
+ "password": "danger",
+ "protocol": "sftp",
+ "port": 22,
+ "fileNameEncoding": "utf8",
+ "autoUpload": true,
+ "autoDelete": false,
+ "autoDownload": false,
+ "ignore": [
+  ".git",
+  "/.vscode"
+ ]
 }

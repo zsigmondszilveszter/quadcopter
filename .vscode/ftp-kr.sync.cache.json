@@ -1,227 +1,67 @@
 {
-  "sftp://192.168.1.200:22@quadcopter": {
-    "quadcopter": {},
-    "home": {
-      "quadcopter": {
-        "quadcopter": {},
-        "fpga_server": {
-          "qc_server_dev": {
-            "type": "-",
-            "size": 20560,
-            "lmtime": 0,
-            "modified": false
-          },
-          ".gitignore": {
-            "type": "-",
-            "size": 13,
-            "lmtime": 1537301922982,
-            "modified": false
-          },
-          "Makefile": {
-            "type": "-",
-            "size": 1178,
-            "lmtime": 1537301950708,
-            "modified": false
-          },
-          "includes": {
-            "tcpSocket.h": {
-              "type": "-",
-              "size": 337,
-              "lmtime": 1537293387578,
-              "modified": false
-            },
-            "tcpWrapper.h": {
-              "type": "-",
-              "size": 592,
-              "lmtime": 1537302253330,
-              "modified": false
-            },
-            "threadManager.h": {
-              "type": "-",
-              "size": 95,
-              "lmtime": 1537302284716,
-              "modified": false
-            }
-          },
-          "src": {
-            "main.c": {
-              "type": "-",
-              "size": 459,
-              "lmtime": 1537302198531,
-              "modified": false
-            },
-            "library": {
-              "threadManager.c": {
-                "type": "-",
-                "size": 579,
-                "lmtime": 1537302557324,
-                "modified": false
-              }
-            },
-            "main.cpp": {
-              "type": "-",
-              "size": 493,
-              "lmtime": 1537220386434,
-              "modified": false
-            },
-            "networking": {
-              "a.out": {
-                "type": "-",
-                "size": 15876,
-                "lmtime": 0,
-                "modified": false
-              },
-              "tcpSocket.cpp": {
-                "type": "-",
-                "size": 468,
-                "lmtime": 1537293349528,
-                "modified": false
-              },
-              "tcpWrapper.c": {
-                "type": "-",
-                "size": 6366,
-                "lmtime": 1537307339198,
-                "modified": false
-              }
-            },
-            "obj": {}
-          },
-          "qc_server_prod": {
-            "type": "-",
-            "size": 20560,
-            "lmtime": 0,
-            "modified": false
-          },
-          "docs": {
-            "based_on_lfs_book": {
-              "build_cross_toolchain": {
-                "build_cross_toolchain.sh": {
-                  "type": "-",
-                  "size": 5257,
-                  "lmtime": 1537212977681,
-                  "modified": false
-                }
-              },
-              "build_temporary_system": {
-                "build_temporary_system.sh": {
-                  "type": "-",
-                  "size": 13464,
-                  "lmtime": 1537212977681,
-                  "modified": false
-                },
-                "md5sums": {
-                  "type": "-",
-                  "size": 4654,
-                  "lmtime": 1537212977682,
-                  "modified": false
-                },
-                "version-check.sh": {
-                  "type": "-",
-                  "size": 1565,
-                  "lmtime": 1537212977682,
-                  "modified": false
-                },
-                "wget-list": {
-                  "type": "-",
-                  "size": 5294,
-                  "lmtime": 1537212977683,
-                  "modified": false
-                }
-              },
-              "cross_build_clfs_system": {
-                "build_clfs_blfs_step4.sh": {
-                  "type": "-",
-                  "size": 5455,
-                  "lmtime": 1537212977684,
-                  "modified": false
-                },
-                "build_clfs_system_step3.sh": {
-                  "type": "-",
-                  "size": 14809,
-                  "lmtime": 1537212977684,
-                  "modified": false
-                },
-                "build_cross_clfs_system_step1.sh": {
-                  "type": "-",
-                  "size": 22839,
-                  "lmtime": 1537212977685,
-                  "modified": false
-                },
-                "build_cross_clfs_system_step2.sh": {
-                  "type": "-",
-                  "size": 4850,
-                  "lmtime": 1537212977685,
-                  "modified": false
-                }
-              },
-              "LFS-BOOK-8.2.pdf": {
-                "type": "-",
-                "size": 1811466,
-                "lmtime": 1537212977678,
-                "modified": false
-              },
-              "Raspberry_pi_linux": {
-                "README.md": {
-                  "type": "-",
-                  "size": 2317,
-                  "lmtime": 1537212977679,
-                  "modified": false
-                }
-              },
-              "Xilinx_linux": {
-                "README.md": {
-                  "type": "-",
-                  "size": 964,
-                  "lmtime": 1537212977680,
-                  "modified": false
-                }
-              }
-            },
-            "own_cross_compilation": {
-              "README.md": {
-                "type": "-",
-                "size": 0,
-                "lmtime": 1537212977686,
-                "modified": false
-              }
-            }
-          },
-          "README.md": {
-            "type": "-",
-            "size": 12,
-            "lmtime": 1537212977667,
-            "modified": false
-          }
-        }
-      }
-    },
+  "sftp://192.168.10.200:22@quadcopter": {
     "fpga_server": {
       ".gitignore": {
         "type": "-",
-        "size": 11,
+        "size": 13,
         "lmtime": 0,
         "modified": false
       },
       "Makefile": {
         "type": "-",
-        "size": 1053,
+        "size": 1178,
         "lmtime": 0,
-        "modified": true
+        "modified": false
       },
       "includes": {},
-      "qc_server": {
-        "type": "-",
-        "size": 20560,
-        "lmtime": 0,
-        "modified": true
-      },
       "src": {},
+      "qc_server_prod": {
+        "type": "-",
+        "size": 20640,
+        "lmtime": 0,
+        "modified": false
+      },
       "docs": {},
       "README.md": {
         "type": "-",
         "size": 12,
         "lmtime": 0,
         "modified": false
+      }
+    },
+    "home": {
+      "quadcopter": {
+        "fpga_server": {
+          "src": {
+            "tmp.c": {
+              "type": "-",
+              "size": 4894,
+              "lmtime": 1539292418595,
+              "modified": false
+            },
+            "main.c": {
+              "type": "-",
+              "size": 459,
+              "lmtime": 0,
+              "modified": false
+            },
+            "iic_tmp": {
+              "type": "-",
+              "size": 15932,
+              "lmtime": 0,
+              "modified": true
+            },
+            "library": {},
+            "main.cpp": {
+              "type": "-",
+              "size": 493,
+              "lmtime": 0,
+              "modified": false
+            },
+            "networking": {},
+            "obj": {}
+          }
+        }
       }
     }
   },
