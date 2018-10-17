@@ -6,8 +6,10 @@
 #include <string.h>
 #include <unistd.h>
 #include <errno.h>
+#include <fcntl.h>
 
 #include "tcpWrapper.h"
+#include "itg3200_gyro.h"
 
 
 //--------------------------------------------------------------------------
@@ -62,6 +64,10 @@ int init_tcp(){
     return tcp_socket;
 }
 
+void printSocketErrno(){
+    fprintf(stderr, "Something went wrong with socket connection, the error code is %i\n", errno);
+}
+
 //--------------------------------------------------------------------------
 // 
 //--------------------------------------------------------------------------
@@ -81,57 +87,61 @@ int startNetworkServer(){
     }
 }
 
+//--------------------------------------------------------------------------
+// 
+//--------------------------------------------------------------------------
 int tcpWorker(void * ptr){
     ThreadPackage* pkg = (ThreadPackage*) ptr;
 
     socklen_t peer_addr_size = sizeof(struct sockaddr_in);
 
     int incoming_socket, len;
-    char buffer[500] = {0};
+    char buffer[100] = {0};
+    char bytes_to_transfer = 0;
     while( 1 ){ // accept new connections in loop if a previous one is closed 
-        //--------------------------------------------------------------------------
         // waiting for connections
-        //--------------------------------------------------------------------------
         printf(">> thread.%d is listening and accepting new incoming TCP socket connections.\n", pkg->serial);
         incoming_socket = accept(tcp_socket, (struct sockaddr *) &peer_addr, &peer_addr_size);
         if( incoming_socket < 0 ){
-            switch(errno){
-                case EBADF: fprintf(stderr, "tcp_socket is not an open file descriptor\n");break;
-                case ENOTSOCK: fprintf(stderr, "The file descriptor tcp_socket does not refer to a socket.\n");break;
-                default: fprintf(stderr, "Something went wrong with socket accepting, the error code is %i\n", errno);break;
-            }
+            printSocketErrno();
             return -1;
         }
 
+        // 
         while( 1 ){
+            usleep(10000);
             memset(buffer, 0, sizeof buffer); // flush buffer in every cycle
-            // waiting for incoming packet, the read command blocks the thread until a packet arrive
-            len = recv(incoming_socket, buffer, 500, 0);
-            if(len < 0){
-                // if buffer length is less than 0 something went wrong
-                switch(errno){
-                    case EAGAIN: fprintf(stderr, "The socket is marked nonblocking and the receive operation...\n");break;
-                    case EBADF: fprintf(stderr, "The argument sockfd is an invalid file descriptor.\n");break;
-                    case ECONNREFUSED: fprintf(stderr, "A remote host refused to allow the network connection (typically because it is not running the requested service).\n");break;
-                    case EFAULT: fprintf(stderr, "The receive buffer pointer(s) point outside the process's address space.\n");break;
-                    case EINTR: fprintf(stderr, "he receive was interrupted by delivery of a signal before any data were available;\n");break;
-                    case EINVAL: fprintf(stderr, "Invalid argument passed.\n");break;
-                    case ENOMEM: fprintf(stderr, "Could not allocate memory for recvmsg().\n");break;
-                    case ENOTCONN: fprintf(stderr, "The socket is associated with a connection-oriented protocol and has not been connected\n");break;
-                    case ENOTSOCK: fprintf(stderr, "The file descriptor sockfd does not refer to a socket.\n");break;
-                    default: fprintf(stderr, "Something went wrong with receiving messages, the error code is %i\n", errno);break;
-                }
-                close(incoming_socket);
-                return -1;
-            } else if(len == 0){
-                // an empty packet indicates that the client closed the connection
-                close(incoming_socket);
-                printf("<< Connection closed on thread %d\n", pkg->serial);
+
+            memcpy(buffer,      &gyro_x, 2);
+            memcpy(buffer+2,    &gyro_y, 2);
+            memcpy(buffer+4,    &gyro_z, 2);
+
+            bytes_to_transfer = 6;
+
+            if (fcntl(incoming_socket, F_GETFD) < 0){
                 break;
-            } else {
-                printf("------------------------\n");
-                printf("Incoming message: %s\n", buffer);
             }
+            if( send(incoming_socket, buffer, bytes_to_transfer, 0) < 0){
+                printSocketErrno();
+                return -1;
+            }
+            
+            // // waiting for incoming packet, the read command blocks the thread until a packet arrive
+            // len = recv(incoming_socket, buffer, 500, 0);
+            // if(len < 0){
+            //     // if buffer length is less than 0 something went wrong
+            //     printSocketErrno();
+            //     close(incoming_socket);
+            //     return -1;
+            // } else if(len == 0){
+            //     // an empty packet indicates that the client closed the connection
+            //     close(incoming_socket);
+            //     printf("<< Connection closed on thread %d\n", pkg->serial);
+            //     break;
+            // } else {
+            //     printf("------------------------\n");
+            //     printf("Incoming message: %s\n", buffer);
+            // }
         }
     }
     return 0;

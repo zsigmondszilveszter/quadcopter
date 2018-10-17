@@ -44,3 +44,7 @@ dtc -I dts -O dtb -o devicetree.dtb system-top.dts
 # archive the build
 	copy the .config and UImage to a backupfolder
 	
+
+
+# check eudev device file descriptor
+udevadm info -a -n /dev/i2c-0

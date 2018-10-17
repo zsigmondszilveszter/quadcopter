@@ -1,6 +1,12 @@
 {
   "sftp://192.168.10.200:22@quadcopter": {
     "fpga_server": {
+      "qc_server_dev": {
+        "type": "-",
+        "size": 21448,
+        "lmtime": 0,
+        "modified": false
+      },
       ".gitignore": {
         "type": "-",
         "size": 13,
@@ -9,18 +15,12 @@
       },
       "Makefile": {
         "type": "-",
-        "size": 1178,
+        "size": 1290,
         "lmtime": 0,
-        "modified": false
+        "modified": true
       },
       "includes": {},
       "src": {},
-      "qc_server_prod": {
-        "type": "-",
-        "size": 20640,
-        "lmtime": 0,
-        "modified": false
-      },
       "docs": {},
       "README.md": {
         "type": "-",
@@ -32,34 +32,156 @@
     "home": {
       "quadcopter": {
         "fpga_server": {
-          "src": {
-            "tmp.c": {
+          "qc_server_dev": {
+            "type": "-",
+            "size": 21448,
+            "lmtime": 0,
+            "modified": false
+          },
+          ".gitignore": {
+            "type": "-",
+            "size": 13,
+            "lmtime": 0,
+            "modified": false
+          },
+          "Makefile": {
+            "type": "-",
+            "size": 1322,
+            "lmtime": 1539724888664,
+            "modified": false
+          },
+          "includes": {
+            "itg3200_gyro.h": {
               "type": "-",
-              "size": 4894,
-              "lmtime": 1539292418595,
+              "size": 975,
+              "lmtime": 1539725589884,
               "modified": false
             },
+            "tcpSocket.h": {
+              "type": "-",
+              "size": 337,
+              "lmtime": 0,
+              "modified": false
+            },
+            "szilv_i2c.h": {
+              "type": "-",
+              "size": 460,
+              "lmtime": 1539451338714,
+              "modified": false
+            },
+            "tcpWrapper.h": {
+              "type": "-",
+              "size": 588,
+              "lmtime": 1539448217967,
+              "modified": false
+            },
+            "tools.h": {
+              "type": "-",
+              "size": 531,
+              "lmtime": 1539451341250,
+              "modified": false
+            },
+            "mag3110_magnm.h": {
+              "type": "-",
+              "size": 1041,
+              "lmtime": 1539724794785,
+              "modified": false
+            },
+            "threadManager.h": {
+              "type": "-",
+              "size": 95,
+              "lmtime": 0,
+              "modified": false
+            }
+          },
+          "src": {
             "main.c": {
               "type": "-",
-              "size": 459,
-              "lmtime": 0,
+              "size": 611,
+              "lmtime": 1539725635223,
               "modified": false
             },
-            "iic_tmp": {
-              "type": "-",
-              "size": 15932,
-              "lmtime": 0,
-              "modified": true
+            "sensors": {
+              "mag3110_magnm.c": {
+                "type": "-",
+                "size": 2188,
+                "lmtime": 1539726201112,
+                "modified": false
+              },
+              "itg3200_gyro.c": {
+                "type": "-",
+                "size": 3061,
+                "lmtime": 1539726208894,
+                "modified": false
+              }
             },
-            "library": {},
-            "main.cpp": {
-              "type": "-",
-              "size": 493,
-              "lmtime": 0,
-              "modified": false
+            "library": {
+              "szilv_i2c.c": {
+                "type": "-",
+                "size": 2419,
+                "lmtime": 1539445005000,
+                "modified": false
+              },
+              "tools.c": {
+                "type": "-",
+                "size": 202,
+                "lmtime": 1539451351187,
+                "modified": false
+              },
+              "threadManager.c": {
+                "type": "-",
+                "size": 579,
+                "lmtime": 1537378912212,
+                "modified": true
+              }
             },
-            "networking": {},
-            "obj": {}
+            "networking": {
+              "a.out": {
+                "type": "-",
+                "size": 15876,
+                "lmtime": 1539419120400,
+                "modified": false
+              },
+              "tcpSocket.cpp": {
+                "type": "-",
+                "size": 468,
+                "lmtime": 1539419120416,
+                "modified": false
+              },
+              "tcpWrapper.c": {
+                "type": "-",
+                "size": 5292,
+                "lmtime": 1539451452163,
+                "modified": false
+              }
+            },
+            "obj": {
+              "tcpWrapper.o": {
+                "type": "-",
+                "size": 6692,
+                "lmtime": 1539419120437,
+                "modified": false
+              },
+              "threadManager.o": {
+                "type": "-",
+                "size": 1160,
+                "lmtime": 1539419120464,
+                "modified": false
+              },
+              "main.o": {
+                "type": "-",
+                "size": 1380,
+                "lmtime": 1539419120482,
+                "modified": false
+              }
+            }
+          },
+          "docs": {},
+          "README.md": {
+            "type": "-",
+            "size": 12,
+            "lmtime": 0,
+            "modified": false
           }
         }
       }

@@ -1,16 +1,4 @@
 {
- "host": "192.168.10.200",
- "username": "quadcopter",
- "remotePath": "fpga_server",
- "password": "danger",
- "protocol": "sftp",
- "port": 22,
- "fileNameEncoding": "utf8",
- "autoUpload": true,
- "autoDelete": false,
- "autoDownload": false,
- "ignore": [
-  ".git",
-  "/.vscode"
- ]
+ "/src/tmp.c": "download",
+ "/src/iic_tmp": "download"
 }
