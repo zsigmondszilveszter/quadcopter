@@ -3,9 +3,9 @@
     "fpga_server": {
       "qc_server_dev": {
         "type": "-",
-        "size": 21448,
+        "size": 22128,
         "lmtime": 0,
-        "modified": false
+        "modified": true
       },
       ".gitignore": {
         "type": "-",
@@ -15,7 +15,7 @@
       },
       "Makefile": {
         "type": "-",
-        "size": 1290,
+        "size": 1344,
         "lmtime": 0,
         "modified": true
       },
@@ -34,9 +34,9 @@
         "fpga_server": {
           "qc_server_dev": {
             "type": "-",
-            "size": 21448,
+            "size": 21760,
             "lmtime": 0,
-            "modified": false
+            "modified": true
           },
           ".gitignore": {
             "type": "-",
@@ -46,11 +46,17 @@
           },
           "Makefile": {
             "type": "-",
-            "size": 1322,
-            "lmtime": 1539724888664,
+            "size": 1344,
+            "lmtime": 1539805147562,
             "modified": false
           },
           "includes": {
+            "lsm6ds33.h": {
+              "type": "-",
+              "size": 2730,
+              "lmtime": 1539804998543,
+              "modified": false
+            },
             "itg3200_gyro.h": {
               "type": "-",
               "size": 975,
@@ -65,8 +71,8 @@
             },
             "szilv_i2c.h": {
               "type": "-",
-              "size": 460,
-              "lmtime": 1539451338714,
+              "size": 551,
+              "lmtime": 1539811154041,
               "modified": false
             },
             "tcpWrapper.h": {
@@ -83,8 +89,8 @@
             },
             "mag3110_magnm.h": {
               "type": "-",
-              "size": 1041,
-              "lmtime": 1539724794785,
+              "size": 1070,
+              "lmtime": 1539810757280,
               "modified": false
             },
             "threadManager.h": {
@@ -97,29 +103,35 @@
           "src": {
             "main.c": {
               "type": "-",
-              "size": 611,
-              "lmtime": 1539725635223,
+              "size": 617,
+              "lmtime": 1540411408304,
               "modified": false
             },
             "sensors": {
+              "lsm6ds33.c": {
+                "type": "-",
+                "size": 2198,
+                "lmtime": 1540413774711,
+                "modified": false
+              },
               "mag3110_magnm.c": {
                 "type": "-",
-                "size": 2188,
-                "lmtime": 1539726201112,
+                "size": 2505,
+                "lmtime": 1540412445111,
                 "modified": false
               },
               "itg3200_gyro.c": {
                 "type": "-",
-                "size": 3061,
-                "lmtime": 1539726208894,
+                "size": 3071,
+                "lmtime": 1540411373643,
                 "modified": false
               }
             },
             "library": {
               "szilv_i2c.c": {
                 "type": "-",
-                "size": 2419,
-                "lmtime": 1539445005000,
+                "size": 3107,
+                "lmtime": 1539899380175,
                 "modified": false
               },
               "tools.c": {

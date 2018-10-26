@@ -12,6 +12,7 @@
 		reset-gpios = <&gpio0 46 1>;
 	};
 };
+# !!! Pay attention, sometimes  (i2c0 = &axi_iic_1; i2c1 = &axi_iic_0;) numbers are mixed
 ### compile device tree
 dtc -I dts -O dtb -o devicetree.dtb system-top.dts
 

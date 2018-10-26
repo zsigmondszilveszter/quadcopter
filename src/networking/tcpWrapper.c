@@ -109,7 +109,7 @@ int tcpWorker(void * ptr){
 
         // 
         while( 1 ){
-            usleep(10000);
+            usleep(50000);
             memset(buffer, 0, sizeof buffer); // flush buffer in every cycle
 
             memcpy(buffer,      &gyro_x, 2);

@@ -80,7 +80,7 @@ void itg3200_measure(){
 //--------------------------------------------------------------------------
 int gyroThread(void * ptr){
 	for (long long i=0; i<8446744073709551615; i++){
-		usleep(5000);
+		usleep(10000);
 		gyro_x = read2_i2c_registerMSB(FD_GyroIIC, GYRO_XOUT_H);
 		gyro_y = read2_i2c_registerMSB(FD_GyroIIC, GYRO_YOUT_H);
 		gyro_z = read2_i2c_registerMSB(FD_GyroIIC, GYRO_ZOUT_H);

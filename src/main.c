@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include "threadManager.h"
 #include "tcpWrapper.h"
-#include "itg3200_gyro.h"
+#include "pololu_imu_v5.h"
 #include "mag3110_magnm.h"
 
 
@@ -16,8 +16,8 @@ int main(){
 
     startNetworkServer();
 
-    init_itg3200();
-    itg3200_measure();
+    init_pololu_v5();
+    measure_pololu_imu_v5();
 
     init_mag3110();
     mag3110_measure();

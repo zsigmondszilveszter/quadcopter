@@ -1,7 +1,10 @@
 # headers location
 IDIR =includes
+IDIR_LIBRARY=$(IDIR)/library
+IDIR_SENSORS=$(IDIR)/sensors
+IDIR_NETWORKING=$(IDIR)/networking
 CC=gcc
-CFLAGS=-I$(IDIR)
+CFLAGS=-I$(IDIR) -I$(IDIR_SENSORS) -I$(IDIR_NETWORKING) -I$(IDIR_LIBRARY) -lm
 LIBS=-pthread
 
 # source files location
@@ -11,26 +14,33 @@ ODIR=$(SDIR)/obj
 # location for library functions
 LDIR =$(SDIR)/lib
 
-_DEPS = tcpSocket.h threadManager.h szilv_i2c.h itg3200_gyro.h mag3110_magnm.h lsm6ds33.h
-DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
-
-_OBJ = main.o tcpWrapper.o threadManager.o szilv_i2c.o itg3200_gyro.o mag3110_magnm.o lsm6ds33.o
+#
+_SENSOR_OBJECTS = itg3200_gyro.o mag3110_magnm.o lsm6ds33.o pololu_imu_v5.o
+_OBJ = main.o tcpWrapper.o threadManager.o szilv_i2c.o tools.o $(_SENSOR_OBJECTS)
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
-# every object file depends on the certain .c file and the header files too
-$(ODIR)/%.o: $(SDIR)/%.c $(DEPS)
-	$(CC) -c -o $@ $< $(CFLAGS) $(LIBS)
 
 # networking directory
-$(ODIR)/%.o: $(SDIR)/networking/%.c $(DEPS)
+_NETWORKING_HEADERS = tcpWrapper.h
+NETWORKING_HEADERS_DEPS = $(patsubst %,$(IDIR)/networking/%,$(_NETWORKING_HEADERS))
+$(ODIR)/%.o: $(SDIR)/networking/%.c $(NETWORKING_HEADERS_DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS) $(LIBS)
 
+# sensors headers
+_SENSOR_HEADERS = itg3200_gyro.h mag3110_magnm.h lsm6ds33.h pololu_imu_v5.h
+SENSOR_HEADERS_DEPS = $(patsubst %,$(IDIR)/sensors/%,$(_SENSOR_HEADERS))
 # sensors directory
-$(ODIR)/%.o: $(SDIR)/sensors/%.c $(DEPS)
+$(ODIR)/%.o: $(SDIR)/sensors/%.c $(SENSOR_HEADERS_DEPS)
 	$(CC) -O -c -o $@ $< $(CFLAGS) $(LIBS)
 
 # library directory
-$(ODIR)/%.o: $(SDIR)/library/%.c $(DEPS)
+_LIBRARY_HEADERS = tools.h szilv_i2c.h threadManager.h
+LIBRARY_HEADERS_DEPS = $(patsubst %,$(IDIR)/library/%,$(_LIBRARY_HEADERS))
+$(ODIR)/%.o: $(SDIR)/library/%.c $(LIBRARY_HEADERS_DEPS)
+	$(CC) -O -c -o $@ $< $(CFLAGS) $(LIBS)
+
+# every object file depends on the certain .c file and the certain header files too
+$(ODIR)/%.o: $(SDIR)/%.c
 	$(CC) -c -o $@ $< $(CFLAGS) $(LIBS)
 
 # the first and default make rule, this links the object files and builds the ELF file with the name of the rule

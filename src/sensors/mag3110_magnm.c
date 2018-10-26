@@ -48,7 +48,7 @@ int init_mag3110(){
 	}
 
 	if (ioctl(FD_MagnMIIC, I2C_SLAVE, MagnmSlaveAddr) < 0) {
-		printf("Cannot set IIC slave addr, errno: %d\n", errno);
+		printf("Cannot set IIC MAG3110's slave addr, errno: %d\n", errno);
 		exit(1);
 	}
     
@@ -71,7 +71,7 @@ void mag3110_measure(){
 //--------------------------------------------------------------------------
 int magnmThread(void * ptr){
 	for (long long i=0; i<8446744073709551615; i++){
-		usleep(5000);
+		usleep(20000);
 		magnm_x = read2_i2c_registerMSB(FD_MagnMIIC, OUT_X_MSB);
 		magnm_y = read2_i2c_registerMSB(FD_MagnMIIC, OUT_Y_MSB);
 		magnm_z = read2_i2c_registerMSB(FD_MagnMIIC, OUT_Z_MSB);
