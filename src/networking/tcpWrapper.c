@@ -10,6 +10,7 @@
 
 #include "tcpWrapper.h"
 #include "itg3200_gyro.h"
+#include "lsm6ds33.h"
 
 
 //--------------------------------------------------------------------------
@@ -116,7 +117,11 @@ int tcpWorker(void * ptr){
             memcpy(buffer+2,    &gyro_y, 2);
             memcpy(buffer+4,    &gyro_z, 2);
 
-            bytes_to_transfer = 6;
+            memcpy(buffer+6,    &accel_x, 2);
+            memcpy(buffer+8,    &accel_y, 2);
+            memcpy(buffer+10,   &accel_z, 2);
+
+            bytes_to_transfer = 12;
 
             if (fcntl(incoming_socket, F_GETFD) < 0){
                 break;
