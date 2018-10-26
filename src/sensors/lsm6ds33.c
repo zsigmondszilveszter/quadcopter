@@ -50,6 +50,8 @@ void init_lsm6ds33(){
 /** 
 /* ************************************************************************** */
 void lsm6ds33_measure(long long index){
+	select_slave_lsm6ds33();
+	
 	// Accelorometer
 	accel_x = read2_i2c_registerLSB(FD_ImuIIC, OUTX_L_XL);
 	accel_y = read2_i2c_registerLSB(FD_ImuIIC, OUTY_L_XL);
