@@ -3,7 +3,7 @@
     "fpga_server": {
       "qc_server_dev": {
         "type": "-",
-        "size": 22128,
+        "size": 22144,
         "lmtime": 0,
         "modified": true
       },
@@ -32,12 +32,6 @@
     "home": {
       "quadcopter": {
         "fpga_server": {
-          "qc_server_dev": {
-            "type": "-",
-            "size": 21760,
-            "lmtime": 0,
-            "modified": true
-          },
           ".gitignore": {
             "type": "-",
             "size": 13,
@@ -46,84 +40,98 @@
           },
           "Makefile": {
             "type": "-",
-            "size": 1344,
-            "lmtime": 1539805147562,
+            "size": 1900,
+            "lmtime": 1540583015317,
             "modified": false
           },
           "includes": {
-            "lsm6ds33.h": {
-              "type": "-",
-              "size": 2730,
-              "lmtime": 1539804998543,
-              "modified": false
+            "networking": {
+              "tcpWrapper.h": {
+                "type": "-",
+                "size": 588,
+                "lmtime": 1540575945804,
+                "modified": false
+              }
             },
-            "itg3200_gyro.h": {
-              "type": "-",
-              "size": 975,
-              "lmtime": 1539725589884,
-              "modified": false
+            "sensors": {
+              "lsm6ds33.h": {
+                "type": "-",
+                "size": 2799,
+                "lmtime": 1540582117479,
+                "modified": false
+              },
+              "itg3200_gyro.h": {
+                "type": "-",
+                "size": 975,
+                "lmtime": 1540574417822,
+                "modified": false
+              },
+              "pololu_imu_v5.h": {
+                "type": "-",
+                "size": 728,
+                "lmtime": 1540577707667,
+                "modified": false
+              },
+              "mag3110_magnm.h": {
+                "type": "-",
+                "size": 1070,
+                "lmtime": 1540574422992,
+                "modified": false
+              }
             },
-            "tcpSocket.h": {
-              "type": "-",
-              "size": 337,
-              "lmtime": 0,
-              "modified": false
-            },
-            "szilv_i2c.h": {
-              "type": "-",
-              "size": 551,
-              "lmtime": 1539811154041,
-              "modified": false
-            },
-            "tcpWrapper.h": {
-              "type": "-",
-              "size": 588,
-              "lmtime": 1539448217967,
-              "modified": false
-            },
-            "tools.h": {
-              "type": "-",
-              "size": 531,
-              "lmtime": 1539451341250,
-              "modified": false
-            },
-            "mag3110_magnm.h": {
-              "type": "-",
-              "size": 1070,
-              "lmtime": 1539810757280,
-              "modified": false
-            },
-            "threadManager.h": {
-              "type": "-",
-              "size": 95,
-              "lmtime": 0,
-              "modified": false
+            "library": {
+              "szilv_i2c.h": {
+                "type": "-",
+                "size": 551,
+                "lmtime": 1540576286422,
+                "modified": false
+              },
+              "threadManager.h": {
+                "type": "-",
+                "size": 90,
+                "lmtime": 1540576290775,
+                "modified": false
+              },
+              "tools.h": {
+                "type": "-",
+                "size": 531,
+                "lmtime": 1540576293595,
+                "modified": false
+              }
             }
           },
           "src": {
-            "main.c": {
-              "type": "-",
-              "size": 617,
-              "lmtime": 1540411408304,
-              "modified": false
+            "networking": {
+              "tcpWrapper.c": {
+                "type": "-",
+                "size": 5292,
+                "lmtime": 1539881076358,
+                "modified": false
+              }
             },
             "sensors": {
               "lsm6ds33.c": {
                 "type": "-",
-                "size": 2198,
-                "lmtime": 1540413774711,
+                "size": 2515,
+                "lmtime": 1540588523847,
+                "modified": false
+              },
+              "pololu_imu_v5.c": {
+                "type": "-",
+                "size": 1793,
+                "lmtime": 1540578668165,
                 "modified": false
               },
               "mag3110_magnm.c": {
                 "type": "-",
-                "size": 2505,
-                "lmtime": 1540412445111,
+                "size": 2518,
+                "lmtime": 1540584459159,
                 "modified": false
               },
               "itg3200_gyro.c": {
                 "type": "-",
                 "size": 3071,
-                "lmtime": 1540411373643,
+                "lmtime": 1540576691303,
                 "modified": false
               }
             },
@@ -134,58 +142,24 @@
                 "lmtime": 1539899380175,
                 "modified": false
               },
+              "threadManager.c": {
+                "type": "-",
+                "size": 579,
+                "lmtime": 1539419120391,
+                "modified": false
+              },
               "tools.c": {
                 "type": "-",
                 "size": 202,
                 "lmtime": 1539451351187,
                 "modified": false
-              },
-              "threadManager.c": {
-                "type": "-",
-                "size": 579,
-                "lmtime": 1537378912212,
-                "modified": true
               }
             },
-            "networking": {
-              "a.out": {
-                "type": "-",
-                "size": 15876,
-                "lmtime": 1539419120400,
-                "modified": false
-              },
-              "tcpSocket.cpp": {
-                "type": "-",
-                "size": 468,
-                "lmtime": 1539419120416,
-                "modified": false
-              },
-              "tcpWrapper.c": {
-                "type": "-",
-                "size": 5292,
-                "lmtime": 1539451452163,
-                "modified": false
-              }
-            },
-            "obj": {
-              "tcpWrapper.o": {
-                "type": "-",
-                "size": 6692,
-                "lmtime": 1539419120437,
-                "modified": false
-              },
-              "threadManager.o": {
-                "type": "-",
-                "size": 1160,
-                "lmtime": 1539419120464,
-                "modified": false
-              },
-              "main.o": {
-                "type": "-",
-                "size": 1380,
-                "lmtime": 1539419120482,
-                "modified": false
-              }
+            "main.c": {
+              "type": "-",
+              "size": 620,
+              "lmtime": 1540577774566,
+              "modified": false
             }
           },
           "docs": {},
