@@ -12,7 +12,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <errno.h>
-#include <pthread.h>
 
 #include <fcntl.h>
 #include <linux/i2c-dev.h>
@@ -24,6 +23,26 @@
 
 /***************************** Definitions *********************************/
 #define MAG3110_I2C "/dev/i2c-1"
+/************************** Definitions *****************************/
+#define MagnmSlaveAddr 0x0E  // 0x0E - the Magnm initial default slave addr
+#define DR_STATUS 		0x00    
+#define OUT_X_MSB 		0x01
+#define OUT_X_LSB 		0x02
+#define OUT_Y_MSB 	    0x03
+#define OUT_Y_LSB 	    0x04
+#define OUT_Z_MSB 	    0x05
+#define OUT_Z_LSB 	    0x06
+#define WHO_AM_I 	    0x07
+#define SYSMOD 	        0x08
+#define OFF_X_MSB 		0x09
+#define OFF_X_LSB 		0x0A
+#define OFF_Y_MSB 		0x0B
+#define OFF_Y_LSB 		0x0C
+#define OFF_Z_MSB 	    0x0D
+#define OFF_Z_LSB 		0x0E
+#define DIE_TEMP 		0x0F
+#define CTRL_REG1 		0x10
+#define CTRL_REG2 		0x11
 
 
 /************************** Variable Definitions *****************************/
@@ -58,24 +77,13 @@ int init_mag3110(){
                                                                 //    1: ACTIVE mode.
 }
 
-/* ************************************************************************** */
-/** 
-/* ************************************************************************** */
-pthread_t magnm_thread;
-void mag3110_measure(){
-    pthread_create( &magnm_thread, NULL, (void *) magnmThread, NULL);
-}
-
 //--------------------------------------------------------------------------
 // 
 //--------------------------------------------------------------------------
-int magnmThread(void * ptr){
-	for (long long i=0; i<8446744073709551615; i++){
-		usleep(20000);
-		magnm_x = read2_i2c_registerMSB(FD_MagnMIIC, OUT_X_MSB);
-		magnm_y = read2_i2c_registerMSB(FD_MagnMIIC, OUT_Y_MSB);
-		magnm_z = read2_i2c_registerMSB(FD_MagnMIIC, OUT_Z_MSB);
+void mag3110_measure(long long index){
+	magnm_x = read2_i2c_registerMSB(FD_MagnMIIC, OUT_X_MSB);
+	magnm_y = read2_i2c_registerMSB(FD_MagnMIIC, OUT_Y_MSB);
+	magnm_z = read2_i2c_registerMSB(FD_MagnMIIC, OUT_Z_MSB);
 
-		// printf("%lld: Magnm x: %d ,   Magnm y: %d,    Magnm z: %d\n",i, magnm_x, magnm_y, magnm_z);
-	}
+	// printf("%lld: Magnm x: %d ,   Magnm y: %d,    Magnm z: %d\n",index, magnm_x, magnm_y, magnm_z);
 }

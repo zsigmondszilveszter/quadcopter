@@ -1,18 +1,19 @@
 /*****************************************************************************/
 /**
 * Szilveszter Zsigmond 
-* 2018-10-16
+* 2018-11-15
 *
 ******************************************************************************/
 
-#ifndef _MAG3110_MAGNM_H    /* Guard against multiple inclusion */
-#define _MAG3110_MAGNM_H
+#ifndef _LIS3MDL_MAGNM_H    /* Guard against multiple inclusion */
+#define _LIS3MDL_MAGNM_H
 
 int magnm_x;
 int magnm_y;
 int magnm_z;
+int magn_temperature;
 
-int init_mag3110(void);
-void mag3110_measure(long long index);
+void init_lis3mdl(void);
+void lis3mdl_measure(long long index);
 
-#endif /* _MAG3110_MAGNM_H */
+#endif /* _LIS3MDL_MAGNM_H */
