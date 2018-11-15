@@ -5,8 +5,7 @@
 #include <stdio.h>
 #include "threadManager.h"
 #include "tcpWrapper.h"
-#include "pololu_imu_v5.h"
-#include "mag3110_magnm.h"
+#include "state_machine.h"
 
 
 int main(){
@@ -16,11 +15,8 @@ int main(){
 
     startNetworkServer();
 
-    init_pololu_v5();
-    measure_pololu_imu_v5();
-
-    init_mag3110();
-    mag3110_measure();
+    // finite state machine
+    startFiniteStateMachine();
 
     // waits and blocks the execution of program until all the threads finished their work//
     waitForThreads();

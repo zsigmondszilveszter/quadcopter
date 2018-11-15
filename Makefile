@@ -15,8 +15,8 @@ ODIR=$(SDIR)/obj
 LDIR =$(SDIR)/lib
 
 #
-_SENSOR_OBJECTS = itg3200_gyro.o mag3110_magnm.o lsm6ds33.o pololu_imu_v5.o
-_OBJ = main.o tcpWrapper.o threadManager.o szilv_i2c.o tools.o $(_SENSOR_OBJECTS)
+_SENSOR_OBJECTS = pololu_imu_v5.o lsm6ds33.o lis3mdl.o 
+_OBJ = main.o tcpWrapper.o threadManager.o szilv_i2c.o tools.o state_machine.o $(_SENSOR_OBJECTS)
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 
@@ -27,7 +27,7 @@ $(ODIR)/%.o: $(SDIR)/networking/%.c $(NETWORKING_HEADERS_DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS) $(LIBS)
 
 # sensors headers
-_SENSOR_HEADERS = itg3200_gyro.h mag3110_magnm.h lsm6ds33.h pololu_imu_v5.h
+_SENSOR_HEADERS = pololu_imu_v5.h lsm6ds33.h lis3mdl.h
 SENSOR_HEADERS_DEPS = $(patsubst %,$(IDIR)/sensors/%,$(_SENSOR_HEADERS))
 # sensors directory
 $(ODIR)/%.o: $(SDIR)/sensors/%.c $(SENSOR_HEADERS_DEPS)
@@ -39,8 +39,11 @@ LIBRARY_HEADERS_DEPS = $(patsubst %,$(IDIR)/library/%,$(_LIBRARY_HEADERS))
 $(ODIR)/%.o: $(SDIR)/library/%.c $(LIBRARY_HEADERS_DEPS)
 	$(CC) -O -c -o $@ $< $(CFLAGS) $(LIBS)
 
+
+_HEADERS = state_machine.h
+HEADERS_DEPS = $(patsubst %,$(IDIR)/%,$(_HEADERS))
 # every object file depends on the certain .c file and the certain header files too
-$(ODIR)/%.o: $(SDIR)/%.c
+$(ODIR)/%.o: $(SDIR)/%.c $(HEADERS_DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS) $(LIBS)
 
 # the first and default make rule, this links the object files and builds the ELF file with the name of the rule

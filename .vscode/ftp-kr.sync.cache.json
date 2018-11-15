@@ -1,12 +1,6 @@
 {
   "sftp://192.168.10.200:22@quadcopter": {
     "fpga_server": {
-      "qc_server_dev": {
-        "type": "-",
-        "size": 22144,
-        "lmtime": 0,
-        "modified": true
-      },
       ".gitignore": {
         "type": "-",
         "size": 13,
@@ -15,7 +9,7 @@
       },
       "Makefile": {
         "type": "-",
-        "size": 1344,
+        "size": 2011,
         "lmtime": 0,
         "modified": true
       },
@@ -40,24 +34,22 @@
           },
           "Makefile": {
             "type": "-",
-            "size": 1900,
-            "lmtime": 1540583015317,
+            "size": 1970,
+            "lmtime": 1542306583892,
             "modified": false
           },
           "includes": {
-            "networking": {
-              "tcpWrapper.h": {
-                "type": "-",
-                "size": 588,
-                "lmtime": 1540575945804,
-                "modified": false
-              }
+            "state_machine.h": {
+              "type": "-",
+              "size": 465,
+              "lmtime": 1542302941196,
+              "modified": false
             },
             "sensors": {
               "lsm6ds33.h": {
                 "type": "-",
-                "size": 2799,
-                "lmtime": 1540582117479,
+                "size": 521,
+                "lmtime": 1542303395321,
                 "modified": false
               },
               "itg3200_gyro.h": {
@@ -66,16 +58,22 @@
                 "lmtime": 1540574417822,
                 "modified": false
               },
+              "lis3mdl.h": {
+                "type": "-",
+                "size": 453,
+                "lmtime": 1542303884971,
+                "modified": false
+              },
               "pololu_imu_v5.h": {
                 "type": "-",
                 "size": 728,
-                "lmtime": 1540577707667,
+                "lmtime": 1542140416572,
                 "modified": false
               },
               "mag3110_magnm.h": {
                 "type": "-",
-                "size": 1070,
-                "lmtime": 1540574422992,
+                "size": 430,
+                "lmtime": 1542144431895,
                 "modified": false
               }
             },
@@ -86,46 +84,58 @@
                 "lmtime": 1540576286422,
                 "modified": false
               },
-              "threadManager.h": {
-                "type": "-",
-                "size": 90,
-                "lmtime": 1540576290775,
-                "modified": false
-              },
               "tools.h": {
                 "type": "-",
                 "size": 531,
                 "lmtime": 1540576293595,
                 "modified": false
+              },
+              "threadManager.h": {
+                "type": "-",
+                "size": 90,
+                "lmtime": 1540576290775,
+                "modified": false
+              }
+            },
+            "networking": {
+              "tcpWrapper.h": {
+                "type": "-",
+                "size": 588,
+                "lmtime": 1540575945804,
+                "modified": false
               }
             }
           },
           "src": {
-            "networking": {
-              "tcpWrapper.c": {
-                "type": "-",
-                "size": 5292,
-                "lmtime": 1539881076358,
-                "modified": false
-              }
+            "main.c": {
+              "type": "-",
+              "size": 557,
+              "lmtime": 1542302858047,
+              "modified": false
             },
             "sensors": {
+              "lis3mdl.c": {
+                "type": "-",
+                "size": 2884,
+                "lmtime": 1542307620307,
+                "modified": false
+              },
               "lsm6ds33.c": {
                 "type": "-",
-                "size": 2515,
-                "lmtime": 1540588523847,
+                "size": 5399,
+                "lmtime": 1542303413586,
                 "modified": false
               },
               "pololu_imu_v5.c": {
                 "type": "-",
-                "size": 1793,
-                "lmtime": 1540578668165,
+                "size": 1831,
+                "lmtime": 1542303227360,
                 "modified": false
               },
               "mag3110_magnm.c": {
                 "type": "-",
-                "size": 2518,
-                "lmtime": 1540584459159,
+                "size": 2770,
+                "lmtime": 1542303101262,
                 "modified": false
               },
               "itg3200_gyro.c": {
@@ -142,27 +152,159 @@
                 "lmtime": 1539899380175,
                 "modified": false
               },
-              "threadManager.c": {
-                "type": "-",
-                "size": 579,
-                "lmtime": 1539419120391,
-                "modified": false
-              },
               "tools.c": {
                 "type": "-",
                 "size": 202,
                 "lmtime": 1539451351187,
                 "modified": false
+              },
+              "threadManager.c": {
+                "type": "-",
+                "size": 579,
+                "lmtime": 1539419120391,
+                "modified": false
               }
             },
-            "main.c": {
+            "state_machine.c": {
               "type": "-",
-              "size": 620,
-              "lmtime": 1540577774566,
+              "size": 1688,
+              "lmtime": 1542307631020,
               "modified": false
+            },
+            "networking": {
+              "tcpWrapper.c": {
+                "type": "-",
+                "size": 5454,
+                "lmtime": 1541804616226,
+                "modified": false
+              }
+            },
+            "obj": {}
+          },
+          "docs": {
+            "based_on_lfs_book": {
+              "cross_build_clfs_system": {
+                "build_cross_clfs_system_step2.sh": {
+                  "type": "-",
+                  "size": 4679,
+                  "lmtime": 1536957736431,
+                  "modified": false
+                },
+                "build_clfs_blfs_step4.sh": {
+                  "type": "-",
+                  "size": 5235,
+                  "lmtime": 1536959605467,
+                  "modified": false
+                },
+                "build_cross_clfs_system_step1.sh": {
+                  "type": "-",
+                  "size": 21827,
+                  "lmtime": 1536957724424,
+                  "modified": false
+                },
+                "build_clfs_system_step3.sh": {
+                  "type": "-",
+                  "size": 14110,
+                  "lmtime": 1537378912211,
+                  "modified": false
+                }
+              },
+              "build_temporary_system": {
+                "md5sums": {
+                  "type": "-",
+                  "size": 4571,
+                  "lmtime": 1534885107881,
+                  "modified": false
+                },
+                "build_temporary_system.sh": {
+                  "type": "-",
+                  "size": 12761,
+                  "lmtime": 1536697281561,
+                  "modified": false
+                },
+                "version-check.sh": {
+                  "type": "-",
+                  "size": 1516,
+                  "lmtime": 1534363240574,
+                  "modified": false
+                },
+                "wget-list": {
+                  "type": "-",
+                  "size": 5208,
+                  "lmtime": 1535398126600,
+                  "modified": false
+                }
+              },
+              "Raspberry_pi_linux": {
+                "README.md": {
+                  "type": "-",
+                  "size": 2262,
+                  "lmtime": 1536866910479,
+                  "modified": false
+                }
+              },
+              "LFS-BOOK-8.2.pdf": {
+                "type": "-",
+                "size": 1811466,
+                "lmtime": 0,
+                "modified": false
+              },
+              "build_cross_toolchain": {
+                "build_cross_toolchain.sh": {
+                  "type": "-",
+                  "size": 5011,
+                  "lmtime": 1536697340481,
+                  "modified": false
+                }
+              },
+              "Xilinx_linux": {
+                "README.md": {
+                  "type": "-",
+                  "size": 1473,
+                  "lmtime": 1540410658062,
+                  "modified": false
+                }
+              }
+            },
+            "own_cross_compilation": {
+              "LFS-BOOK-8.3-systemd.pdf": {
+                "type": "-",
+                "size": 1647110,
+                "lmtime": 1537086947662,
+                "modified": false
+              },
+              "README.md": {
+                "type": "-",
+                "size": 71,
+                "lmtime": 1537378917131,
+                "modified": false
+              },
+              "building_cross_tools.sh": {
+                "type": "-",
+                "size": 6322,
+                "lmtime": 1537209071719,
+                "modified": false
+              },
+              "md5sums": {
+                "type": "-",
+                "size": 4498,
+                "lmtime": 1537087486904,
+                "modified": false
+              },
+              "version-check.sh": {
+                "type": "-",
+                "size": 1514,
+                "lmtime": 1537087616458,
+                "modified": false
+              },
+              "wget-list": {
+                "type": "-",
+                "size": 5299,
+                "lmtime": 1537089961872,
+                "modified": false
+              }
             }
           },
-          "docs": {},
           "README.md": {
             "type": "-",
             "size": 12,

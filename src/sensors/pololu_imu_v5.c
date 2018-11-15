@@ -20,6 +20,7 @@
 
 #include "pololu_imu_v5.h"
 #include "lsm6ds33.h"
+#include "lis3mdl.h"
 
 
 /* ************************************************************************** */
@@ -42,6 +43,7 @@ int open_iic_device(){
 void init_pololu_v5(){
     open_iic_device();
 	init_lsm6ds33();
+	init_lis3mdl();
 }
 
 /* ************************************************************************** */
