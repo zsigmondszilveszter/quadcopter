@@ -100,7 +100,7 @@ void select_slave_lsm6ds33(){
 /** configure, initialize the MAG3110 imu
 /* ************************************************************************** */
 void init_lsm6ds33(){
-	//
+	// select the lsm6ds33 slave
 	select_slave_lsm6ds33();
     
     // init
@@ -120,23 +120,20 @@ void init_lsm6ds33(){
 /** 
 /* ************************************************************************** */
 void lsm6ds33_measure(long long index){
+	// select the lsm6ds33 slave
 	select_slave_lsm6ds33();
 	
 	// Accelorometer
 	accel_x = read2_i2c_registerLSB(FD_ImuIIC, OUTX_L_XL);
 	accel_y = read2_i2c_registerLSB(FD_ImuIIC, OUTY_L_XL);
 	accel_z = read2_i2c_registerLSB(FD_ImuIIC, OUTZ_L_XL);
-	// printf("%lld: Accel x: %d ,   Accel y: %d,    Accel z: %d\n", index, accel_x, accel_y, accel_z);
 
 	// Gyroscope
 	gyro_x = read2_i2c_registerLSB(FD_ImuIIC, OUTX_L_G);
 	gyro_y = read2_i2c_registerLSB(FD_ImuIIC, OUTY_L_G);
 	gyro_z = read2_i2c_registerLSB(FD_ImuIIC, OUTZ_L_G);
-	// printf("%lld: Gyro x: %d ,   Gyro y: %d,    Gyro z: %d\n", index, gyro_x, gyro_y, gyro_z);
 
-	// int rawtemp = read2_i2c_registerLSB(FD_ImuIIC, OUT_TEMP_L);
-	// temperature = roundf( (float) rawtemp / 16 + 25 );
-	// printf("Temperature: %.2f\n", temperature);
-
-	// printf("%lld: A_x: %d,   A_y: %d,   A_z: %d,   G_x: %d,   G_y: %d,   G_z: %d,   Temp: %.1f C\n", index, accel_x, accel_y, accel_z, gyro_x, gyro_y, gyro_z, temperature);
+	// Chip temperature
+	int rawtemp = read2_i2c_registerLSB(FD_ImuIIC, OUT_TEMP_L);
+	temperature = roundf( (float) rawtemp / 16 + 25 );
 }

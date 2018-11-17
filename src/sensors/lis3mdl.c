@@ -65,7 +65,7 @@ void select_slave_lis3mdl(){
 /** configure, initialize the MAG3110 imu
 /* ************************************************************************** */
 void init_lis3mdl(){
-	//
+	// select the lis3mdl slave
 	select_slave_lis3mdl();
     
     // init
@@ -79,8 +79,10 @@ void init_lis3mdl(){
 /** 
 /* ************************************************************************** */
 void lis3mdl_measure(long long index){
+    // select the lis3mdl slave
 	select_slave_lis3mdl();
 	
+    // Magnetometer
     magnm_x = read2_i2c_registerLSB(FD_ImuIIC, LIS3MDL_OUT_X_L);
 	magnm_y = read2_i2c_registerLSB(FD_ImuIIC, LIS3MDL_OUT_Y_L);
 	magnm_z = read2_i2c_registerLSB(FD_ImuIIC, LIS3MDL_OUT_Z_L);

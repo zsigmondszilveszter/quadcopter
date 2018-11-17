@@ -60,12 +60,12 @@ void finiteStateMachineOneStep(long long index){
 /** 
 /* ************************************************************************** */
 void finiteState_measure(long long index){
-    // measure
-    // calculate and print elapsed time
+    // calculate and print elapsed time from previous measure
     // measureAndPrintRealTime(begin_time);
     // begin_time = startRealTimeMeasure();
+
+    // measure
     lsm6ds33_measure(index);
     lis3mdl_measure(index);
-    printf("%lld: A_x: %d,   A_y: %d,   A_z: %d,   G_x: %d,   G_y: %d,   G_z: %d,   Temp: %.1f C\n", index, accel_x, accel_y, accel_z, gyro_x, gyro_y, gyro_z, temperature);
-    // printf("%lld: Magnm x: %d ,   Magnm y: %d,    Magnm z: %d\n", index, magnm_x, magnm_y, magnm_z);
+    printf("%lld: A_x: %d,   A_y: %d,   A_z: %d,   G_x: %d,   G_y: %d,   G_z: %d,   Temp: %.1f C,  Magnm x: %d ,   Magnm y: %d,    Magnm z: %d\n", index, accel_x, accel_y, accel_z, gyro_x, gyro_y, gyro_z, temperature, magnm_x, magnm_y, magnm_z);
 }

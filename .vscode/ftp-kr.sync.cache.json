@@ -3,9 +3,9 @@
     "fpga_server": {
       "qc_server_dev": {
         "type": "-",
-        "size": 22268,
+        "size": 22468,
         "lmtime": 0,
-        "modified": false
+        "modified": true
       },
       ".gitignore": {
         "type": "-",
@@ -40,15 +40,15 @@
           },
           "Makefile": {
             "type": "-",
-            "size": 1970,
-            "lmtime": 1542306583892,
+            "size": 2257,
+            "lmtime": 1542472961770,
             "modified": false
           },
           "includes": {
             "state_machine.h": {
               "type": "-",
-              "size": 465,
-              "lmtime": 1542302941196,
+              "size": 553,
+              "lmtime": 1542475142117,
               "modified": false
             },
             "sensors": {
@@ -92,8 +92,8 @@
               },
               "tools.h": {
                 "type": "-",
-                "size": 783,
-                "lmtime": 1542316913546,
+                "size": 929,
+                "lmtime": 1542476059762,
                 "modified": false
               },
               "threadManager.h": {
@@ -110,26 +110,34 @@
                 "lmtime": 1540575945804,
                 "modified": false
               }
+            },
+            "timing": {
+              "intervalTimer.h": {
+                "type": "-",
+                "size": 610,
+                "lmtime": 1542473909158,
+                "modified": false
+              }
             }
           },
           "src": {
             "main.c": {
               "type": "-",
-              "size": 557,
-              "lmtime": 1542302858047,
+              "size": 638,
+              "lmtime": 1542475175898,
               "modified": false
             },
             "sensors": {
               "lis3mdl.c": {
                 "type": "-",
-                "size": 2884,
-                "lmtime": 1542307620307,
+                "size": 2961,
+                "lmtime": 1542477098286,
                 "modified": false
               },
               "lsm6ds33.c": {
                 "type": "-",
-                "size": 5399,
-                "lmtime": 1542303413586,
+                "size": 5058,
+                "lmtime": 1542477081665,
                 "modified": false
               },
               "pololu_imu_v5.c": {
@@ -160,8 +168,8 @@
               },
               "tools.c": {
                 "type": "-",
-                "size": 1346,
-                "lmtime": 1542316900994,
+                "size": 2895,
+                "lmtime": 1542476019206,
                 "modified": false
               },
               "threadManager.c": {
@@ -173,8 +181,8 @@
             },
             "state_machine.c": {
               "type": "-",
-              "size": 2300,
-              "lmtime": 1542319431382,
+              "size": 2173,
+              "lmtime": 1542477270401,
               "modified": false
             },
             "networking": {
@@ -185,7 +193,15 @@
                 "modified": false
               }
             },
-            "obj": {}
+            "obj": {},
+            "timing": {
+              "intervalTimer.c": {
+                "type": "-",
+                "size": 3920,
+                "lmtime": 1542477362527,
+                "modified": false
+              }
+            }
           },
           "docs": {
             "based_on_lfs_book": {
