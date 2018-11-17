@@ -1,6 +1,12 @@
 {
   "sftp://192.168.10.200:22@quadcopter": {
     "fpga_server": {
+      "qc_server_dev": {
+        "type": "-",
+        "size": 22268,
+        "lmtime": 0,
+        "modified": false
+      },
       ".gitignore": {
         "type": "-",
         "size": 13,
@@ -9,7 +15,7 @@
       },
       "Makefile": {
         "type": "-",
-        "size": 2011,
+        "size": 1970,
         "lmtime": 0,
         "modified": true
       },
@@ -86,8 +92,8 @@
               },
               "tools.h": {
                 "type": "-",
-                "size": 531,
-                "lmtime": 1540576293595,
+                "size": 783,
+                "lmtime": 1542316913546,
                 "modified": false
               },
               "threadManager.h": {
@@ -154,8 +160,8 @@
               },
               "tools.c": {
                 "type": "-",
-                "size": 202,
-                "lmtime": 1539451351187,
+                "size": 1346,
+                "lmtime": 1542316900994,
                 "modified": false
               },
               "threadManager.c": {
@@ -167,8 +173,8 @@
             },
             "state_machine.c": {
               "type": "-",
-              "size": 1688,
-              "lmtime": 1542307631020,
+              "size": 2300,
+              "lmtime": 1542319431382,
               "modified": false
             },
             "networking": {

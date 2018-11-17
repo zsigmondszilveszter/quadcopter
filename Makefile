@@ -3,8 +3,9 @@ IDIR =includes
 IDIR_LIBRARY=$(IDIR)/library
 IDIR_SENSORS=$(IDIR)/sensors
 IDIR_NETWORKING=$(IDIR)/networking
+IDIR_TIMING=$(IDIR)/timing
 CC=gcc
-CFLAGS=-I$(IDIR) -I$(IDIR_SENSORS) -I$(IDIR_NETWORKING) -I$(IDIR_LIBRARY) -lm
+CFLAGS=-I$(IDIR) -I$(IDIR_SENSORS) -I$(IDIR_NETWORKING) -I$(IDIR_LIBRARY) -I$(IDIR_TIMING) -lm -lrt
 LIBS=-pthread
 
 # source files location
@@ -16,7 +17,7 @@ LDIR =$(SDIR)/lib
 
 #
 _SENSOR_OBJECTS = pololu_imu_v5.o lsm6ds33.o lis3mdl.o 
-_OBJ = main.o tcpWrapper.o threadManager.o szilv_i2c.o tools.o state_machine.o $(_SENSOR_OBJECTS)
+_OBJ = main.o tcpWrapper.o threadManager.o szilv_i2c.o tools.o state_machine.o intervalTimer.o $(_SENSOR_OBJECTS)
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 
@@ -38,6 +39,12 @@ _LIBRARY_HEADERS = tools.h szilv_i2c.h threadManager.h
 LIBRARY_HEADERS_DEPS = $(patsubst %,$(IDIR)/library/%,$(_LIBRARY_HEADERS))
 $(ODIR)/%.o: $(SDIR)/library/%.c $(LIBRARY_HEADERS_DEPS)
 	$(CC) -O -c -o $@ $< $(CFLAGS) $(LIBS)
+
+# timing directory
+_TIMING_HEADERS = intervalTimer.h
+TIMING_HEADERS_DEPS = $(patsubst %,$(IDIR)/timing/%,$(_TIMING_HEADERS))
+$(ODIR)/%.o: $(SDIR)/timing/%.c $(TIMING_HEADERS_DEPS)
+	$(CC) -O -c -o $@ $< $(CFLAGS) $(LIBS) 
 
 
 _HEADERS = state_machine.h

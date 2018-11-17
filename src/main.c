@@ -3,6 +3,7 @@
 */
 
 #include <stdio.h>
+#include <unistd.h>
 #include "threadManager.h"
 #include "tcpWrapper.h"
 #include "state_machine.h"
@@ -16,7 +17,11 @@ int main(){
     startNetworkServer();
 
     // finite state machine
-    startFiniteStateMachine();
+    initFiniteStateMachine();
+
+    while(1){ // inifinte sleep
+        sleep(500000);
+    }
 
     // waits and blocks the execution of program until all the threads finished their work//
     waitForThreads();

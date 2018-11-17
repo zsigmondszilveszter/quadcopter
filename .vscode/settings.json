@@ -1,6 +1,13 @@
 {
     "files.associations": {
         "lsm6ds33.h": "c",
-        "tcpwrapper.h": "c"
+        "tcpwrapper.h": "c",
+        "signal.h": "c",
+        "types.h": "c",
+        "int-ll64.h": "c",
+        "bitsperlong.h": "c",
+        "intervaltimer.h": "c",
+        "stdio.h": "c",
+        "stdlib.h": "c"
     }
 }
