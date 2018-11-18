@@ -78,7 +78,7 @@ void init_lis3mdl(){
 /* ************************************************************************** */
 /** 
 /* ************************************************************************** */
-void lis3mdl_measure(long long index){
+void lis3mdl_measure(){
     // select the lis3mdl slave
 	select_slave_lis3mdl();
 	

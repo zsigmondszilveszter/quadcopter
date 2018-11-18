@@ -119,7 +119,7 @@ void init_lsm6ds33(){
 /* ************************************************************************** */
 /** 
 /* ************************************************************************** */
-void lsm6ds33_measure(long long index){
+void lsm6ds33_measure(){
 	// select the lsm6ds33 slave
 	select_slave_lsm6ds33();
 	

@@ -23,6 +23,7 @@ int open_iic_device(void);
 void init_pololu_v5();
 void measure_pololu_imu_v5(void);
 int pololuThread(void * ptr);
+void pololuMeasure(void);
 
 
 #endif /* _POLOLU_IMU_V5_H */

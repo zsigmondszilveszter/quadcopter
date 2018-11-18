@@ -34,7 +34,6 @@ timer_t intervalTimerID;
 struct sigaction sa;
 struct sigevent se;
 struct itimerspec its;
-long long i=0;
 
 
 /* ************************************************************************** */
@@ -74,8 +73,7 @@ void timerExpiredHandler(int sig, siginfo_t *si, void *uc){
     if ( *tidp == intervalTimerID){
         // timer fired signal event
         // one tick for finite state machine
-        finiteStateMachineOneStep(i);
-        i++;
+        finiteStateMachineOneStep();
     }
 }
 

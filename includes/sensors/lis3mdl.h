@@ -18,6 +18,6 @@ struct magnSensor3AxeData{
 int magn_temperature;
 
 void init_lis3mdl(void);
-void lis3mdl_measure(long long index);
+void lis3mdl_measure(void);
 
 #endif /* _LIS3MDL_MAGNM_H */

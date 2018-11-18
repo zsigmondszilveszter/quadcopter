@@ -11,9 +11,9 @@
 #define _FINITE_STATE_MACHINE_H
 
 void initFiniteStateMachine(void);
-void finiteStateMachineOneStep(long long index);
+void finiteStateMachineOneStep(void);
 void initTimer(void);
 void initSensors(void);
-void finiteState_measure(long long index);
+void finiteState_measure(void);
 
 #endif /* _FINITE_STATE_MACHINE_H */

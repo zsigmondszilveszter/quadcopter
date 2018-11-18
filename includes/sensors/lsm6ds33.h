@@ -20,6 +20,6 @@ float temperature;
 
 void init_lsm6ds33(void);
 void select_slave_lsm6ds33(void);
-void lsm6ds33_measure(long long index);
+void lsm6ds33_measure();
 
 #endif /* _LSM6DS33_IMU_H */

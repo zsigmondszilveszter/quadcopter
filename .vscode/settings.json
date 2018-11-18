@@ -8,6 +8,7 @@
         "bitsperlong.h": "c",
         "intervaltimer.h": "c",
         "stdio.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "pololu_imu_v5.h": "c"
     }
 }
