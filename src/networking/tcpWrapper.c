@@ -9,8 +9,8 @@
 #include <fcntl.h>
 
 #include "tcpWrapper.h"
-#include "itg3200_gyro.h"
 #include "lsm6ds33.h"
+#include "lis3mdl.h"
 
 
 //--------------------------------------------------------------------------
@@ -110,43 +110,27 @@ int tcpWorker(void * ptr){
 
         // 
         while( 1 ){
-            usleep(50000);
-            memset(buffer, 0, sizeof buffer); // flush buffer in every cycle
+            usleep(100000);
+            // memset(buffer, 0, sizeof buffer); // flush buffer in every cycle
 
-            memcpy(buffer,      &gyro_x, 2);
-            memcpy(buffer+2,    &gyro_y, 2);
-            memcpy(buffer+4,    &gyro_z, 2);
+            memcpy(buffer,      &accel, 6);
+            memcpy(buffer+6,    &gyro, 6);
+            memcpy(buffer+12,   &magnm, 6);
 
-            memcpy(buffer+6,    &accel_x, 2);
-            memcpy(buffer+8,    &accel_y, 2);
-            memcpy(buffer+10,   &accel_z, 2);
-
-            bytes_to_transfer = 12;
+            bytes_to_transfer = 9 * 2;
 
             if (fcntl(incoming_socket, F_GETFD) < 0){
                 break;
             }
             if( send(incoming_socket, buffer, bytes_to_transfer, 0) < 0){
-                printSocketErrno();
-                return -1;
+                if ( errno == 104){
+                    // Connection reset by peer
+                    break;
+                } else {
+                    printSocketErrno();
+                    return -1;
+                }
             }
-            
-            // // waiting for incoming packet, the read command blocks the thread until a packet arrive
-            // len = recv(incoming_socket, buffer, 500, 0);
-            // if(len < 0){
-            //     // if buffer length is less than 0 something went wrong
-            //     printSocketErrno();
-            //     close(incoming_socket);
-            //     return -1;
-            // } else if(len == 0){
-            //     // an empty packet indicates that the client closed the connection
-            //     close(incoming_socket);
-            //     printf("<< Connection closed on thread %d\n", pkg->serial);
-            //     break;
-            // } else {
-            //     printf("------------------------\n");
-            //     printf("Incoming message: %s\n", buffer);
-            // }
         }
     }
     return 0;

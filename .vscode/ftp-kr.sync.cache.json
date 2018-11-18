@@ -3,7 +3,7 @@
     "fpga_server": {
       "qc_server_dev": {
         "type": "-",
-        "size": 22468,
+        "size": 27552,
         "lmtime": 0,
         "modified": true
       },
@@ -15,7 +15,7 @@
       },
       "Makefile": {
         "type": "-",
-        "size": 1970,
+        "size": 2257,
         "lmtime": 0,
         "modified": true
       },
@@ -54,8 +54,8 @@
             "sensors": {
               "lsm6ds33.h": {
                 "type": "-",
-                "size": 521,
-                "lmtime": 1542303395321,
+                "size": 519,
+                "lmtime": 1542540486184,
                 "modified": false
               },
               "itg3200_gyro.h": {
@@ -66,8 +66,8 @@
               },
               "lis3mdl.h": {
                 "type": "-",
-                "size": 453,
-                "lmtime": 1542303884971,
+                "size": 483,
+                "lmtime": 1542540639946,
                 "modified": false
               },
               "pololu_imu_v5.h": {
@@ -107,7 +107,7 @@
               "tcpWrapper.h": {
                 "type": "-",
                 "size": 588,
-                "lmtime": 1540575945804,
+                "lmtime": 1542543474475,
                 "modified": false
               }
             },
@@ -131,13 +131,13 @@
               "lis3mdl.c": {
                 "type": "-",
                 "size": 2961,
-                "lmtime": 1542477098286,
+                "lmtime": 1542540647478,
                 "modified": false
               },
               "lsm6ds33.c": {
                 "type": "-",
                 "size": 5058,
-                "lmtime": 1542477081665,
+                "lmtime": 1542540516244,
                 "modified": false
               },
               "pololu_imu_v5.c": {
@@ -181,15 +181,15 @@
             },
             "state_machine.c": {
               "type": "-",
-              "size": 2173,
-              "lmtime": 1542477270401,
+              "size": 2184,
+              "lmtime": 1542543495864,
               "modified": false
             },
             "networking": {
               "tcpWrapper.c": {
                 "type": "-",
-                "size": 5454,
-                "lmtime": 1541804616226,
+                "size": 4933,
+                "lmtime": 1542546714110,
                 "modified": false
               }
             },

@@ -8,9 +8,13 @@
 #ifndef _LIS3MDL_MAGNM_H    /* Guard against multiple inclusion */
 #define _LIS3MDL_MAGNM_H
 
-int magnm_x;
-int magnm_y;
-int magnm_z;
+#include <stdint.h>
+
+struct magnSensor3AxeData{
+    int16_t x;
+    int16_t y;
+    int16_t z;
+} magnm;
 int magn_temperature;
 
 void init_lis3mdl(void);

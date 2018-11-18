@@ -8,13 +8,13 @@
 #ifndef _LSM6DS33_IMU_H    /* Guard against multiple inclusion */
 #define _LSM6DS33_IMU_H
 
-int gyro_x;
-int gyro_y;
-int gyro_z;
+#include <stdint.h>
 
-int accel_x;
-int accel_y;
-int accel_z;
+struct imuSensor3AxeData{
+    int16_t x;
+    int16_t y;
+    int16_t z;
+} gyro, accel;
 
 float temperature;
 

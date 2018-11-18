@@ -67,5 +67,5 @@ void finiteState_measure(long long index){
     // measure
     lsm6ds33_measure(index);
     lis3mdl_measure(index);
-    printf("%lld: A_x: %d,   A_y: %d,   A_z: %d,   G_x: %d,   G_y: %d,   G_z: %d,   Temp: %.1f C,  Magnm x: %d ,   Magnm y: %d,    Magnm z: %d\n", index, accel_x, accel_y, accel_z, gyro_x, gyro_y, gyro_z, temperature, magnm_x, magnm_y, magnm_z);
+    // printf("%lld: A_x: %6d,   A_y: %6d,   A_z: %6d,   G_x: %6d,   G_y: %6d,   G_z: %6d,   Magnm x: %6d,   Magnm y: %6d,   Magnm z: %6d,   Temp: %.1f C\n", index, accel.x, accel.y, accel.z, gyro.x, gyro.y, gyro.z, magnm.x, magnm.y, magnm.z, temperature);
 }

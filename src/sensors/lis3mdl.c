@@ -83,9 +83,9 @@ void lis3mdl_measure(long long index){
 	select_slave_lis3mdl();
 	
     // Magnetometer
-    magnm_x = read2_i2c_registerLSB(FD_ImuIIC, LIS3MDL_OUT_X_L);
-	magnm_y = read2_i2c_registerLSB(FD_ImuIIC, LIS3MDL_OUT_Y_L);
-	magnm_z = read2_i2c_registerLSB(FD_ImuIIC, LIS3MDL_OUT_Z_L);
+    magnm.x = read2_i2c_registerLSB(FD_ImuIIC, LIS3MDL_OUT_X_L);
+	magnm.y = read2_i2c_registerLSB(FD_ImuIIC, LIS3MDL_OUT_Y_L);
+	magnm.z = read2_i2c_registerLSB(FD_ImuIIC, LIS3MDL_OUT_Z_L);
 
 	// int rawtemp = read2_i2c_registerLSB(FD_ImuIIC, LIS3MDL_TEMP_OUT_L);
 	// magn_temperature = roundf( (float) rawtemp / 16 + 25 );

@@ -124,14 +124,14 @@ void lsm6ds33_measure(long long index){
 	select_slave_lsm6ds33();
 	
 	// Accelorometer
-	accel_x = read2_i2c_registerLSB(FD_ImuIIC, OUTX_L_XL);
-	accel_y = read2_i2c_registerLSB(FD_ImuIIC, OUTY_L_XL);
-	accel_z = read2_i2c_registerLSB(FD_ImuIIC, OUTZ_L_XL);
+	accel.x = read2_i2c_registerLSB(FD_ImuIIC, OUTX_L_XL);
+	accel.y = read2_i2c_registerLSB(FD_ImuIIC, OUTY_L_XL);
+	accel.z = read2_i2c_registerLSB(FD_ImuIIC, OUTZ_L_XL);
 
 	// Gyroscope
-	gyro_x = read2_i2c_registerLSB(FD_ImuIIC, OUTX_L_G);
-	gyro_y = read2_i2c_registerLSB(FD_ImuIIC, OUTY_L_G);
-	gyro_z = read2_i2c_registerLSB(FD_ImuIIC, OUTZ_L_G);
+	gyro.x = read2_i2c_registerLSB(FD_ImuIIC, OUTX_L_G);
+	gyro.y = read2_i2c_registerLSB(FD_ImuIIC, OUTY_L_G);
+	gyro.z = read2_i2c_registerLSB(FD_ImuIIC, OUTZ_L_G);
 
 	// Chip temperature
 	int rawtemp = read2_i2c_registerLSB(FD_ImuIIC, OUT_TEMP_L);

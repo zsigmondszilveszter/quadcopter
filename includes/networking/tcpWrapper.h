@@ -12,7 +12,7 @@
 #define SERVER_IP   "192.168.10.200"
 #define SERVER_PORT     1988
 
-#define TCP_WORKER_NR 2
+#define TCP_WORKER_NR 1
 
 int tcp_socket;
 struct sockaddr_in peer_addr;
