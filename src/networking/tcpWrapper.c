@@ -9,8 +9,8 @@
 #include <fcntl.h>
 
 #include "tcpWrapper.h"
-#include "lsm6ds33.h"
-#include "lis3mdl.h"
+#include "pololu_imu_v5/lsm6ds33.h"
+#include "pololu_imu_v5/lis3mdl.h"
 
 
 //--------------------------------------------------------------------------

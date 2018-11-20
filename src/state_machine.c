@@ -13,9 +13,9 @@
 
 #include "tools.h"
 #include "intervalTimer.h"
-#include "pololu_imu_v5.h"
-#include "lsm6ds33.h"
-#include "lis3mdl.h"
+#include "pololu_imu_v5/pololu_imu_v5.h"
+#include "pololu_imu_v5/lsm6ds33.h"
+#include "pololu_imu_v5/lis3mdl.h"
 #include "state_machine.h"
 
 

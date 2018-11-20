@@ -1,22 +1,21 @@
+# source files location
+SDIR=src
 # headers location
-IDIR =includes
+IDIR =$(SDIR)/includes
 IDIR_LIBRARY=$(IDIR)/library
-IDIR_SENSORS=$(IDIR)/sensors
+IDIR_SENSORS=$(SDIR)/sensors
 IDIR_NETWORKING=$(IDIR)/networking
 IDIR_TIMING=$(IDIR)/timing
 CC=gcc
-CFLAGS=-I$(IDIR) -I$(IDIR_SENSORS) -I$(IDIR_NETWORKING) -I$(IDIR_LIBRARY) -I$(IDIR_TIMING) -lm -lrt
+CFLAGS=-I$(IDIR) -I$(IDIR_NETWORKING) -I$(IDIR_LIBRARY) -I$(IDIR_TIMING) -I$(IDIR_SENSORS) -lm -lrt
 LIBS=-pthread
-
-# source files location
-SDIR=src
 # store object files in this directory
 ODIR=$(SDIR)/obj
 # location for library functions
 LDIR =$(SDIR)/lib
 
 #
-_SENSOR_OBJECTS = pololu_imu_v5.o lsm6ds33.o lis3mdl.o 
+_SENSOR_OBJECTS = pololu_imu_v5.o lsm6ds33.o lis3mdl.o
 _OBJ = main.o tcpWrapper.o threadManager.o szilv_i2c.o tools.o state_machine.o intervalTimer.o $(_SENSOR_OBJECTS)
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
@@ -27,11 +26,11 @@ NETWORKING_HEADERS_DEPS = $(patsubst %,$(IDIR)/networking/%,$(_NETWORKING_HEADER
 $(ODIR)/%.o: $(SDIR)/networking/%.c $(NETWORKING_HEADERS_DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS) $(LIBS)
 
-# sensors headers
-_SENSOR_HEADERS = pololu_imu_v5.h lsm6ds33.h lis3mdl.h
-SENSOR_HEADERS_DEPS = $(patsubst %,$(IDIR)/sensors/%,$(_SENSOR_HEADERS))
-# sensors directory
-$(ODIR)/%.o: $(SDIR)/sensors/%.c $(SENSOR_HEADERS_DEPS)
+# pololu imu sensors headers
+_POLOLU_SENSOR_HEADERS = pololu_imu_v5.h lsm6ds33.h lis3mdl.h
+POLOLU_SENSOR_HEADERS_DEPS = $(patsubst %,$(SDIR)/sensors/pololu_imu_v5/%,$(_POLOLU_SENSOR_HEADERS))
+# pololu sensors directory
+$(ODIR)/%.o: $(SDIR)/sensors/pololu_imu_v5/%.c $(POLOLU_SENSOR_HEADERS_DEPS)
 	$(CC) -O -c -o $@ $< $(CFLAGS) $(LIBS)
 
 # library directory

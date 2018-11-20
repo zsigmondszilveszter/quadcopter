@@ -9,6 +9,7 @@
         "intervaltimer.h": "c",
         "stdio.h": "c",
         "stdlib.h": "c",
-        "pololu_imu_v5.h": "c"
+        "pololu_imu_v5.h": "c",
+        "lis3mdl.h": "c"
     }
 }
