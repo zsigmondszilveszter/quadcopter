@@ -73,7 +73,7 @@ void timerExpiredHandler(int sig, siginfo_t *si, void *uc){
     if ( *tidp == intervalTimerID){
         // timer fired signal event
         // one tick for finite state machine
-        finiteStateMachineOneStep();
+        finiteStateMachineOneIteratition();
     }
 }
 

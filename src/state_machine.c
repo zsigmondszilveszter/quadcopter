@@ -53,7 +53,7 @@ void initSensors(){
 /* ************************************************************************** */
 /** 
 /* ************************************************************************** */
-void finiteStateMachineOneStep(){
+void finiteStateMachineOneIteratition(){
     finiteState_measure();
     i++;
 }
