@@ -65,7 +65,7 @@ double measureRealTime(double startTime){
 /** print to standard output the elapsed time from startTime in milisec in Real time
 /* ************************************************************************** */
 void measureAndPrintRealTime(double startTime){
-    printf("Time elapsed: %0.6f\n", measureRealTime(startTime));
+    printf("Time elapsed: %0.6f msec\n", measureRealTime(startTime));
 }
 
 /* ************************************************************************** */

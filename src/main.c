@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <unistd.h>
+#include <limits.h>
 #include "threadManager.h"
 #include "tcpWrapper.h"
 #include "state_machine.h"
@@ -19,8 +20,8 @@ int main(){
     // finite state machine
     initFiniteStateMachine();
 
-    while(1){ // inifinte sleep
-        sleep(500000);
+    while(1){ // infinite sleep
+        sleep(UINT_MAX);
     }
 
     // waits and blocks the execution of program until all the threads finished their work//

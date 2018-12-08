@@ -1,9 +1,9 @@
 /*****************************************************************************/
 /**
 * Szilveszter Zsigmond 
-* 2018-10-17
+* 2018-11-21
 *
-* Pololu IMU v.5 ( LSM6DS33 and LIS3MDL)
+* BMP180 Digital pressure sensor (Bosch)
 *
 ******************************************************************************/
 
@@ -13,57 +13,58 @@
 #include <unistd.h>
 #include <errno.h>
 #include <pthread.h>
-#include <semaphore.h>
 
 #include <fcntl.h>
 #include <linux/i2c-dev.h>
 #include <sys/ioctl.h>
 
 #include "tools.h"
-#include "pololu_imu_v5.h"
-#include "lsm6ds33.h"
-#include "lis3mdl.h"
+#include "bmp180.h"
+
+
+/***************************** Definitions *********************************/
+#define BMP180_I2C "/dev/i2c-1"
+
 
 
 /* ************************************************************************** */
-/** open I2C-0 device 
+/** open I2C-1 device 
 /* ************************************************************************** */
-int open_iic_device(){
+int open_iic1_device(){
 
 	// Open the device.
-	FD_ImuIIC = open(POLOLU_V5_I2C, O_RDWR);
-	if(FD_ImuIIC < 0)
+	FD_BMP180IIC = open(BMP180_I2C, O_RDWR);
+	if(FD_BMP180IIC < 0)
 	{
-		printf("Cannot open the IIC device, errno: %d\n", errno);
+		printf("Cannot open the Barometer IIC device, errno: %d\n", errno);
 		exit(1);
 	}
+    ioctl(FD_BMP180IIC, I2C_TIMEOUT , 30);
 }
 
 /* ************************************************************************** */
 /** configure, initialize the Pololu v5 IMU
 /* ************************************************************************** */
-void init_pololu_v5(){
-    open_iic_device();
-	init_lsm6ds33();
-	init_lis3mdl();
-	initPololuSemaphores();
-	startPololuMeasure();
+void init_bmp180(){
+    open_iic1_device();
+	initBmp180Semaphores();
+	measure_bmp180_measures();
 }
 
 /* ************************************************************************** */
 /** init semaphores
 /* ************************************************************************** */
-void initPololuSemaphores(){
-	// semaphore for let the pololu sensor starts to measure
-    if( sem_init(&sem_startPololuMeasure, 0, 0) ){
+void initBmp180Semaphores(){
+    // semaphore for let the bmp180 sensor starts to measure
+    if( sem_init(&sem_startBmp180Measure, 0, 0) ){
         // error
-        printf("Error with semaphore sem_startPololuMeasure\n");
+        printf("Error with semaphore sem_startBmp180Measure\n");
         printErrno();
     }
-    // semaphore for let the Pololu sensor signal its measurements are done
-    if( sem_init(&sem_PololuMeasureDone, 0, 0) ){
+    // semaphore for let the Bmp180 sensor signal its measurements are done
+    if( sem_init(&sem_Bmp180MeasureDone, 0, 0) ){
         // error
-        printf("Error with semaphore sem_PololuMeasureDone\n");
+        printf("Error with semaphore sem_Bmp180MeasureDone\n");
         printErrno();
     }
 }
@@ -71,21 +72,21 @@ void initPololuSemaphores(){
 /* ************************************************************************** */
 /** 
 /* ************************************************************************** */
-pthread_t pololu_thread;
-void startPololuMeasure(){
-	pthread_create( &pololu_thread, NULL, (void *) pololuThread, NULL);
+pthread_t bmp180_thread;
+void measure_bmp180_measures(){
+	pthread_create( &bmp180_thread, NULL, (void *) bmp180Thread, NULL);
 }
 
 
 /* ************************************************************************** */
 /**
 /* ************************************************************************** */
-int pololuThread(void * ptr){
+int bmp180Thread(void * ptr){
 	while(1){
 		// wait for the signal to start the measure
-		sem_wait(&sem_startPololuMeasure);
+		sem_wait(&sem_startBmp180Measure);
 		// measure
-		pololuMeasure();
+		measure_bmp180();
 	}
 }
 
@@ -93,9 +94,9 @@ int pololuThread(void * ptr){
 /* ************************************************************************** */
 /** measure
 /* ************************************************************************** */
-void pololuMeasure(){
-	lsm6ds33_measure();
-    lis3mdl_measure();
+void measure_bmp180(){
+	// TODO measure
+
 	// signal the measurement termination
-	sem_post(&sem_PololuMeasureDone);
+	sem_post(&sem_Bmp180MeasureDone);
 }

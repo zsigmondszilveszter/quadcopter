@@ -15,7 +15,7 @@ ODIR=$(SDIR)/obj
 LDIR =$(SDIR)/lib
 
 #
-_SENSOR_OBJECTS = pololu_imu_v5.o lsm6ds33.o lis3mdl.o
+_SENSOR_OBJECTS = pololu_imu_v5.o lsm6ds33.o lis3mdl.o bmp180.o
 _OBJ = main.o tcpWrapper.o threadManager.o szilv_i2c.o tools.o state_machine.o intervalTimer.o $(_SENSOR_OBJECTS)
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
@@ -31,6 +31,9 @@ _POLOLU_SENSOR_HEADERS = pololu_imu_v5.h lsm6ds33.h lis3mdl.h
 POLOLU_SENSOR_HEADERS_DEPS = $(patsubst %,$(SDIR)/sensors/pololu_imu_v5/%,$(_POLOLU_SENSOR_HEADERS))
 # pololu sensors directory
 $(ODIR)/%.o: $(SDIR)/sensors/pololu_imu_v5/%.c $(POLOLU_SENSOR_HEADERS_DEPS)
+	$(CC) -O -c -o $@ $< $(CFLAGS) $(LIBS)
+
+$(ODIR)/%.o: $(SDIR)/sensors/bmp180/%.c $(SDIR)/sensors/bmp180/bmp180.h
 	$(CC) -O -c -o $@ $< $(CFLAGS) $(LIBS)
 
 # library directory
