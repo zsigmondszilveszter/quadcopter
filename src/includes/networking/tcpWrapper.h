@@ -9,7 +9,7 @@
 
 
 #define LISTEN_BACKLOG  50
-#define SERVER_IP   "192.168.10.200"
+#define SERVER_IP   "192.168.1.200"
 #define SERVER_PORT     1988
 
 #define TCP_WORKER_NR 1

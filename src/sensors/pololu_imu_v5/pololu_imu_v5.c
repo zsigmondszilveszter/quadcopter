@@ -54,13 +54,13 @@ void init_pololu_v5(){
 /** init semaphores
 /* ************************************************************************** */
 void initPololuSemaphores(){
-	// semaphore for let the pololu sensor starts to measure
+	// semaphore to let the pololu sensor starts to measure
     if( sem_init(&sem_startPololuMeasure, 0, 0) ){
         // error
         printf("Error with semaphore sem_startPololuMeasure\n");
         printErrno();
     }
-    // semaphore for let the Pololu sensor signal its measurements are done
+    // semaphore to let the Pololu sensor signal its measurements are done
     if( sem_init(&sem_PololuMeasureDone, 0, 0) ){
         // error
         printf("Error with semaphore sem_PololuMeasureDone\n");

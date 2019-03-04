@@ -24,8 +24,8 @@
 /************************** Definitions *****************************/
 // #define TIMER_INTERVAL 100000000 // nanosec => 100ms
 // #define TIMER_INTERVAL 50000000  // nanosec => 50ms
-// #define TIMER_INTERVAL 20000000  // nanosec => 20ms
-#define TIMER_INTERVAL 10000000  // nanosec => 10ms
+#define TIMER_INTERVAL 20000000  // nanosec => 20ms
+// #define TIMER_INTERVAL 10000000  // nanosec => 10ms
 // #define TIMER_INTERVAL 5000000   // nanosec => 5ms
 // #define TIMER_INTERVAL 3000000   // nanosec => 3ms
 #define CLOCKID CLOCK_REALTIME
@@ -76,7 +76,7 @@ void timerExpiredHandler(int sig, siginfo_t *si, void *uc){
     if ( *tidp == intervalTimerID){
         // timer fired signal event
         // one tick for finite state machine
-        finiteStateMachineOneIteratition();
+        finiteStateMachineOneIteration();
     }
 }
 

@@ -19,13 +19,24 @@ int FD_BMP180IIC;
 sem_t sem_startBmp180Measure;
 sem_t sem_Bmp180MeasureDone;
 
+typedef struct {
+    short ac1,ac2,ac3;
+    unsigned short ac4,ac5,ac6;
+    short b1,b2,mb,mc,md;
+} barometerParams;
+
+barometerParams barom_params;
+
 
 int open_iic1_device(void);
-void init_bmp180();
+void init_bmp180(void);
+void init_bmp180_chip(void);
+void select_slave_bmp180(void);
 void initBmp180Semaphores(void);
 void measure_bmp180_measures(void);
 int bmp180Thread(void * ptr);
 void measure_bmp180(void);
+float barometer_read(void);
 
 
 #endif /* _BMP180_H */

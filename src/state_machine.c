@@ -61,7 +61,9 @@ void finiteStateMachineOneIteration(){
     // wait for the results
     sem_wait(&sem_PololuMeasureDone);
     sem_wait(&sem_Bmp180MeasureDone);
+
     // new measurements are ready
+    // measureAndPrintRealTime(begin_time); // measure here the time spent for measurements 
     // printf("%lld: A_x: %6d,   A_y: %6d,   A_z: %6d,   G_x: %6d,   G_y: %6d,   G_z: %6d,   Magnm x: %6d,   Magnm y: %6d,   Magnm z: %6d,   Temp: %.1f C\n", i, accel.x, accel.y, accel.z, gyro.x, gyro.y, gyro.z, magnm.x, magnm.y, magnm.z, temperature);
     i++;
 }
