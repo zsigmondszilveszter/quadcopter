@@ -7,7 +7,7 @@ IDIR_SENSORS=$(SDIR)/sensors
 IDIR_NETWORKING=$(IDIR)/networking
 IDIR_TIMING=$(IDIR)/timing
 CC=gcc
-MKDIR=/usr/bin/mkdir
+MKDIR=mkdir
 CFLAGS=-I$(IDIR) -I$(IDIR_NETWORKING) -I$(IDIR_LIBRARY) -I$(IDIR_TIMING) -I$(IDIR_SENSORS) -lm -lrt
 LIBS=-pthread
 
