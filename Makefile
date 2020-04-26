@@ -25,7 +25,7 @@ OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 _NETWORKING_HEADERS = tcpWrapper.h
 NETWORKING_HEADERS_DEPS = $(patsubst %,$(IDIR)/networking/%,$(_NETWORKING_HEADERS))
 $(ODIR)/%.o: $(SDIR)/networking/%.c $(NETWORKING_HEADERS_DEPS)
-	$(CC) -c -O2 -o $@ $< $(CFLAGS) $(LIBS)
+	$(CC) -O2 -c -o $@ $< $(CFLAGS) $(LIBS)
 
 # pololu imu sensors headers
 _POLOLU_SENSOR_HEADERS = pololu_imu_v5.h lsm6ds33.h lis3mdl.h
@@ -56,7 +56,7 @@ HEADERS_DEPS = $(patsubst %,$(IDIR)/%,$(_HEADERS))
 $(ODIR)/%.o: $(SDIR)/%.c $(HEADERS_DEPS)
 	$(CC) -O2 -c -o $@ $< $(CFLAGS) $(LIBS)
 
-
+#
 $(OBJ): | CreateObjDir
 
 # the first and default make rule, this links the object files and builds the ELF file with the name of the rule
@@ -75,5 +75,5 @@ clean:
 
 .PHONY: CreateObjDir
 # create object directory if it doesn't exist
-CreateObjDir:	
-	$(MKDIR) -p $(ODIR)
+CreateObjDir:
+	@$(MKDIR) -p $(ODIR)
