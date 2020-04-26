@@ -7,8 +7,10 @@ IDIR_SENSORS=$(SDIR)/sensors
 IDIR_NETWORKING=$(IDIR)/networking
 IDIR_TIMING=$(IDIR)/timing
 CC=gcc
+MKDIR=/usr/bin/mkdir
 CFLAGS=-I$(IDIR) -I$(IDIR_NETWORKING) -I$(IDIR_LIBRARY) -I$(IDIR_TIMING) -I$(IDIR_SENSORS) -lm -lrt
 LIBS=-pthread
+
 # store object files in this directory
 ODIR=$(SDIR)/obj
 # location for library functions
@@ -18,7 +20,6 @@ LDIR =$(SDIR)/lib
 _SENSOR_OBJECTS = pololu_imu_v5.o lsm6ds33.o lis3mdl.o bmp180.o
 _OBJ = main.o tcpWrapper.o threadManager.o szilv_i2c.o tools.o state_machine.o intervalTimer.o $(_SENSOR_OBJECTS)
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
-
 
 # networking directory
 _NETWORKING_HEADERS = tcpWrapper.h
@@ -55,17 +56,24 @@ HEADERS_DEPS = $(patsubst %,$(IDIR)/%,$(_HEADERS))
 $(ODIR)/%.o: $(SDIR)/%.c $(HEADERS_DEPS)
 	$(CC) -O2 -c -o $@ $< $(CFLAGS) $(LIBS)
 
+
+$(OBJ): | CreateObjDir
+
 # the first and default make rule, this links the object files and builds the ELF file with the name of the rule
-dev: $(OBJ)
-	$(CC) -O2 -o qc_server_$@ $^ $(CFLAGS) $(LIBS)
+dev: $(OBJ) 
+	$(CC) -o qc_server_$@ $^ $(CFLAGS) $(LIBS)
 
 # production build
 prod: $(OBJ)
 	$(CC) -O2 -o qc_server_$@ $^ $(CFLAGS) $(LIBS)
 
 .PHONY: clean
-
 # clean the project directory from the object files and temporary stuffs
 clean:
 	rm -f $(ODIR)/*.o $(SDIR)/*~ core $(IDIR)/*~
 	rm -f qc_server_*
+
+.PHONY: CreateObjDir
+# create object directory if it doesn't exist
+CreateObjDir:	
+	$(MKDIR) -p $(ODIR)
