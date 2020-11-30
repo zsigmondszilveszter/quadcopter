@@ -5,8 +5,8 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <limits.h>
-#include "threadManager.h"
-#include "tcpWrapper.h"
+#include "library/threadManager.h"
+#include "networking/tcpWrapper.h"
 #include "state_machine.h"
 
 

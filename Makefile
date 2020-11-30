@@ -2,13 +2,11 @@
 SDIR=src
 # headers location
 IDIR =$(SDIR)/includes
-IDIR_LIBRARY=$(IDIR)/library
-IDIR_SENSORS=$(SDIR)/sensors
-IDIR_NETWORKING=$(IDIR)/networking
-IDIR_TIMING=$(IDIR)/timing
+SENSORS_DIR =$(SDIR)/sensors
 CC=gcc
+#CC=clang
 MKDIR=mkdir
-CFLAGS=-I$(IDIR) -I$(IDIR_NETWORKING) -I$(IDIR_LIBRARY) -I$(IDIR_TIMING) -I$(IDIR_SENSORS) -lm -lrt
+CFLAGS=-std=c99 -I$(IDIR) -I$(SENSORS_DIR) -lm -lrt
 LIBS=-pthread
 
 # store object files in this directory

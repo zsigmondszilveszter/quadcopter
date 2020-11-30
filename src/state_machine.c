@@ -12,8 +12,8 @@
 #include <stdlib.h>
 #include <semaphore.h>
 
-#include "tools.h"
-#include "intervalTimer.h"
+#include "library/tools.h"
+#include "timing/intervalTimer.h"
 #include "pololu_imu_v5/pololu_imu_v5.h"
 #include "pololu_imu_v5/lsm6ds33.h"
 #include "pololu_imu_v5/lis3mdl.h"
@@ -27,7 +27,7 @@ long long i = 0;
 
 
 /* ************************************************************************** */
-/** 
+// 
 /* ************************************************************************** */
 void initFiniteStateMachine(){
     printf("Finite State Machine Started.\n");
@@ -44,7 +44,7 @@ void initFiniteStateMachine(){
 }
 
 /* ************************************************************************** */
-/** 
+// 
 /* ************************************************************************** */
 void initSensors(){
     // inits
@@ -53,7 +53,7 @@ void initSensors(){
 }
 
 /* ************************************************************************** */
-/** timer fired event handler
+// timer fired event handler
 /* ************************************************************************** */
 void finiteStateMachineOneIteration(){
     // start measuring
@@ -69,7 +69,7 @@ void finiteStateMachineOneIteration(){
 }
 
 /* ************************************************************************** */
-/** 
+// 
 /* ************************************************************************** */
 void finiteState_measure(){
     // calculate and print elapsed time from previous measure

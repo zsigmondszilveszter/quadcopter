@@ -1,8 +1,8 @@
 /*
     Szilveszter Zsigmond 18.09.2018
 */
-#include "threadManager.h"
-#include "tcpWrapper.h"
+#include "library/threadManager.h"
+#include "networking/tcpWrapper.h"
 
 
 

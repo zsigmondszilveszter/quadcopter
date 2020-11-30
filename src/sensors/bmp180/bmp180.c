@@ -19,7 +19,7 @@
 #include <sys/ioctl.h>
 #include <math.h>
 
-#include "tools.h"
+#include "library/tools.h"
 #include "bmp180.h"
 
 
@@ -32,7 +32,7 @@
 
 
 /* ************************************************************************** */
-/** open I2C-1 device 
+// open I2C-1 device 
 /* ************************************************************************** */
 int open_iic1_device(){
 
@@ -47,7 +47,7 @@ int open_iic1_device(){
 }
 
 /* ************************************************************************** */
-/** configure, initialize the BMP 180 Barometer
+// configure, initialize the BMP 180 Barometer
 /* ************************************************************************** */
 void init_bmp180(){
     open_iic1_device();
@@ -58,7 +58,7 @@ void init_bmp180(){
 }
 
 /* ************************************************************************** */
-/** configure, initialize the BMP 180 Barometer Chip
+// configure, initialize the BMP 180 Barometer Chip
 /* ************************************************************************** */
 void init_bmp180_chip(){
 	char adr = AC1_ADDR;
@@ -82,7 +82,7 @@ void init_bmp180_chip(){
 }
 
 /* ************************************************************************** */
-/** 
+// 
 /* ************************************************************************** */
 void select_slave_bmp180(){
 	if (ioctl(FD_BMP180IIC, I2C_SLAVE, BAROMETER_IIC_ADR) < 0) {
@@ -92,7 +92,7 @@ void select_slave_bmp180(){
 }
 
 /* ************************************************************************** */
-/** init semaphores
+// init semaphores
 /* ************************************************************************** */
 void initBmp180Semaphores(){
     // semaphore to let the bmp180 sensor starts to measure
@@ -111,7 +111,7 @@ void initBmp180Semaphores(){
 
 
 /* ************************************************************************** */
-/** 
+// 
 /* ************************************************************************** */
 pthread_t bmp180_thread;
 void measure_bmp180_measures(){
@@ -120,7 +120,7 @@ void measure_bmp180_measures(){
 
 
 /* ************************************************************************** */
-/**
+//
 /* ************************************************************************** */
 int bmp180Thread(void * ptr){
 	while(1){
@@ -133,7 +133,7 @@ int bmp180Thread(void * ptr){
 
 
 /* ************************************************************************** */
-/** measure
+// measure
 /* ************************************************************************** */
 void measure_bmp180(){
 	// TODO measure
@@ -145,7 +145,7 @@ void measure_bmp180(){
 
 
 /* ************************************************************************** */
-/** This is not my implementation, I just took it from my colleagues 
+// This is not my implementation, I just took it from my colleagues 
 /* ************************************************************************** */
 float barometer_read(){
  	unsigned char BytesRead, BytesWrite;

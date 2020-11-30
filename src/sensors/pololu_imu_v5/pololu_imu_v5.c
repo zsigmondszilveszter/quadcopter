@@ -19,14 +19,14 @@
 #include <linux/i2c-dev.h>
 #include <sys/ioctl.h>
 
-#include "tools.h"
+#include "library/tools.h"
 #include "pololu_imu_v5.h"
 #include "lsm6ds33.h"
 #include "lis3mdl.h"
 
 
 /* ************************************************************************** */
-/** open I2C-0 device 
+// open I2C-0 device 
 /* ************************************************************************** */
 int open_iic_device(){
 
@@ -40,7 +40,7 @@ int open_iic_device(){
 }
 
 /* ************************************************************************** */
-/** configure, initialize the Pololu v5 IMU
+/** configure, initialize the Pololu v5 IMU */
 /* ************************************************************************** */
 void init_pololu_v5(){
     open_iic_device();
@@ -51,7 +51,7 @@ void init_pololu_v5(){
 }
 
 /* ************************************************************************** */
-/** init semaphores
+/** init semaphores */
 /* ************************************************************************** */
 void initPololuSemaphores(){
 	// semaphore to let the pololu sensor starts to measure
@@ -91,7 +91,7 @@ int pololuThread(void * ptr){
 
 
 /* ************************************************************************** */
-/** measure
+/** measure */
 /* ************************************************************************** */
 void pololuMeasure(){
 	lsm6ds33_measure();

@@ -8,7 +8,7 @@
 #include <errno.h>
 #include <fcntl.h>
 
-#include "tcpWrapper.h"
+#include "networking/tcpWrapper.h"
 #include "pololu_imu_v5/lsm6ds33.h"
 #include "pololu_imu_v5/lis3mdl.h"
 

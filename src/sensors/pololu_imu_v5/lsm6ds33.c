@@ -18,7 +18,7 @@
 #include <linux/i2c-dev.h>
 #include <sys/ioctl.h>
 
-#include "szilv_i2c.h"
+#include "library/szilv_i2c.h"
 #include "pololu_imu_v5.h"
 #include "lsm6ds33.h"
 
@@ -87,7 +87,7 @@
 
 
 /* ************************************************************************** */
-/** 
+// 
 /* ************************************************************************** */
 void select_slave_lsm6ds33(){
 	if (ioctl(FD_ImuIIC, I2C_SLAVE, lsm6ds33SlaveAddr) < 0) {
@@ -97,7 +97,7 @@ void select_slave_lsm6ds33(){
 }
 
 /* ************************************************************************** */
-/** configure, initialize the MAG3110 imu
+// configure, initialize the MAG3110 imu
 /* ************************************************************************** */
 void init_lsm6ds33(){
 	// select the lsm6ds33 slave
@@ -117,7 +117,7 @@ void init_lsm6ds33(){
 
 
 /* ************************************************************************** */
-/** 
+// 
 /* ************************************************************************** */
 void lsm6ds33_measure(){
 	// select the lsm6ds33 slave

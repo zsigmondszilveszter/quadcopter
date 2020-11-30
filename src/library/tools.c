@@ -13,14 +13,14 @@
 
 
 /* ************************************************************************** */
-/** CPU time
+// CPU time
 /* ************************************************************************** */
 clock_t startTimeMeasure(){
     return clock();
 }
 
 /* ************************************************************************** */
-/** return the elapsed time from startTime in milisec in CPU time
+// return the elapsed time from startTime in milisec in CPU time
 /* ************************************************************************** */
 double measureTime(clock_t startTime){
     clock_t end = clock();
@@ -28,14 +28,14 @@ double measureTime(clock_t startTime){
 }
 
 /* ************************************************************************** */
-/** print to standard output the elapsed time from startTime in milisec in CPU time
+// print to standard output the elapsed time from startTime in milisec in CPU time
 /* ************************************************************************** */
 void measureAndPrintTime(clock_t startTime){
     printf("Time elapsed: %0.6f\n", measureTime(startTime));
 }
 
 /* ************************************************************************** */
-/** Wall time
+// Wall time
 /* ************************************************************************** */
 double getRealClock(){
     struct timeval time;
@@ -47,14 +47,14 @@ double getRealClock(){
 }
 
 /* ************************************************************************** */
-/** Wall time
+// Wall time
 /* ************************************************************************** */
 double startRealTimeMeasure(){
     return getRealClock();
 }
 
 /* ************************************************************************** */
-/** return the elapsed time from startTime in milisec in Real time
+// return the elapsed time from startTime in milisec in Real time
 /* ************************************************************************** */
 double measureRealTime(double startTime){
     double end = getRealClock();
@@ -62,14 +62,14 @@ double measureRealTime(double startTime){
 }
 
 /* ************************************************************************** */
-/** print to standard output the elapsed time from startTime in milisec in Real time
+// print to standard output the elapsed time from startTime in milisec in Real time
 /* ************************************************************************** */
 void measureAndPrintRealTime(double startTime){
     printf("Time elapsed: %0.6f msec\n", measureRealTime(startTime));
 }
 
 /* ************************************************************************** */
-/** 
+// 
 /* ************************************************************************** */
 void printErrno(){
     fprintf(stderr, "Something went wrong, the error code is %i\n", errno);

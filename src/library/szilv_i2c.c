@@ -19,7 +19,7 @@
 #include <fcntl.h>
 #include <sys/ioctl.h>
 
-#include "szilv_i2c.h"
+#include "library/szilv_i2c.h"
 
 /*
  * Data for SMBus Messages
@@ -91,7 +91,7 @@ static inline __s32 i2c_smbus_read_word_data(int file, __u8 command){
 }
 
 /* ************************************************************************** */
-/** write 1 byte value to register pointed by w_addr 
+// write 1 byte value to register pointed by w_addr 
 /* ************************************************************************** */
 __u8 write_i2c_register(int fd, char w_addr, char data){
 	buf[0] = w_addr;
@@ -106,7 +106,7 @@ __u8 write_i2c_register(int fd, char w_addr, char data){
 }
 
 /* ************************************************************************** */
-/** read 1 byte value from register pointed by r_addr 
+// read 1 byte value from register pointed by r_addr 
 /* ************************************************************************** */
 __u8 read_i2c_register(int fd, char r_addr){
 	/* Using SMBus commands */
@@ -121,10 +121,10 @@ __u8 read_i2c_register(int fd, char r_addr){
 	}
 }
 
-/* ************************************************************************** */
-/** read 2 byte value from register pointed by r_addr 
+/* ************************************************************************** *
+ * read 2 byte value from register pointed by r_addr 
  * and from its pair - incremented addr - 2 * 8bit register = 16 bit data (2 byte)
-/* ************************************************************************** */
+ * ************************************************************************** */
 __s16 read2_i2c_registerLSB(int fd, char r_addr){
 	res = 0;
 	/* Using SMBus commands */
@@ -138,16 +138,16 @@ __s16 read2_i2c_registerLSB(int fd, char r_addr){
 	}
 }
 
-/* ************************************************************************** */
-/** read 2 byte value from register pointed by r_addr 
+/* ************************************************************************** *
+ * read 2 byte value from register pointed by r_addr 
  * and from its pair - incremented addr - 2 * 8bit register = 16 bit data (2 byte)
-/* ************************************************************************** */
+ * ************************************************************************** */
 __s16 read2_i2c_registerMSB(int fd, char r_addr){
 	return swapBytesIn2ByteInt(read2_i2c_registerLSB(fd, r_addr));
 }
 
 /* ************************************************************************** */
-/*
+//
 /* ************************************************************************** */
 __s16 swapBytesIn2ByteInt(int value){
 	value = value & 0x0000FFFF;

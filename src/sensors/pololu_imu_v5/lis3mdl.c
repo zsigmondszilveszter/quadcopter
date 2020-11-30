@@ -18,7 +18,7 @@
 #include <linux/i2c-dev.h>
 #include <sys/ioctl.h>
 
-#include "szilv_i2c.h"
+#include "library/szilv_i2c.h"
 #include "pololu_imu_v5.h"
 #include "lis3mdl.h"
 
@@ -52,7 +52,7 @@ enum LIS3MDLRegAddr
 
 
 /* ************************************************************************** */
-/** 
+// 
 /* ************************************************************************** */
 void select_slave_lis3mdl(){
 	if (ioctl(FD_ImuIIC, I2C_SLAVE, lis3mdlSlaveAddr) < 0) {
@@ -62,7 +62,7 @@ void select_slave_lis3mdl(){
 }
 
 /* ************************************************************************** */
-/** configure, initialize the MAG3110 imu
+// configure, initialize the MAG3110 imu
 /* ************************************************************************** */
 void init_lis3mdl(){
 	// select the lis3mdl slave
@@ -76,7 +76,7 @@ void init_lis3mdl(){
 
 
 /* ************************************************************************** */
-/** 
+// 
 /* ************************************************************************** */
 void lis3mdl_measure(){
     // select the lis3mdl slave

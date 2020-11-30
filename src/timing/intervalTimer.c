@@ -17,8 +17,8 @@
 #include <time.h>
 #include <errno.h>
 
-#include "tools.h"
-#include "intervalTimer.h"
+#include "library/tools.h"
+#include "timing/intervalTimer.h"
 #include "state_machine.h"
 
 /************************** Definitions *****************************/
@@ -40,7 +40,7 @@ struct itimerspec its;
 
 
 /* ************************************************************************** */
-/** 
+// 
 /* ************************************************************************** */
 void initTimer(){
     /* Establish handler for timer signal */
@@ -68,7 +68,7 @@ void initTimer(){
 }
 
 /* ************************************************************************** */
-/** Handle the signal sent by system at Timer expiration 
+// Handle the signal sent by system at Timer expiration 
 /* ************************************************************************** */
 void timerExpiredHandler(int sig, siginfo_t *si, void *uc){
     timer_t *tidp;
@@ -82,7 +82,7 @@ void timerExpiredHandler(int sig, siginfo_t *si, void *uc){
 
 
 /* ************************************************************************** */
-/** Start the timer
+// Start the timer
 /* ************************************************************************** */
 void startTimer(){
     its.it_value.tv_sec = 0;
@@ -99,7 +99,7 @@ void startTimer(){
 
 
 /* ************************************************************************** */
-/** 
+// 
 /* ************************************************************************** */
 void stopTimer(){
     its.it_value.tv_sec = 0;
@@ -116,7 +116,7 @@ void stopTimer(){
 
 
 /* ************************************************************************** */
-/** 
+// 
 /* ************************************************************************** */
 void deleteTimer(){
     timer_delete(intervalTimerID);
