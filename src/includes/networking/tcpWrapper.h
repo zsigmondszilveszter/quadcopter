@@ -1,6 +1,9 @@
 /*
     Szilveszter Zsigmond 18.09.2018
 */
+#ifndef _TCP_WRAPPER_H    /* Guard against multiple inclusion */
+#define _TCP_WRAPPER_H
+
 #include <pthread.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -30,3 +33,5 @@ ThreadPackage packages[TCP_WORKER_NR];
 int startNetworkServer();
 int tcpWorker(void * ptr);
 void printSocketErrno();
+
+#endif // _TCP_WRAPPER_H
