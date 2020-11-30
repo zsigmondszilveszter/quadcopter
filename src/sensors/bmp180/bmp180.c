@@ -30,11 +30,18 @@
 #define AC1_ADDR 0xAA
 
 
+/**
+ * variable declarations
+ */
+int FD_BMP180IIC;
+sem_t sem_startBmp180Measure;
+sem_t sem_Bmp180MeasureDone;
+barometerParams barom_params;
 
 /* ************************************************************************** */
 // open I2C-1 device 
 /* ************************************************************************** */
-int open_iic1_device(){
+void open_iic1_device(){
 
 	// Open the device.
 	FD_BMP180IIC = open(BMP180_I2C, O_RDWR);

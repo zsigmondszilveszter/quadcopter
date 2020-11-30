@@ -12,6 +12,14 @@
 #include "pololu_imu_v5/lsm6ds33.h"
 #include "pololu_imu_v5/lis3mdl.h"
 
+/**
+ * networking variables
+ */
+int tcp_socket;
+struct sockaddr_in peer_addr;
+pthread_t tcpWorkerThreads[TCP_WORKER_NR];
+ThreadPackage packages[TCP_WORKER_NR];
+
 
 //--------------------------------------------------------------------------
 // Create socket and bind it to interface which is configured with 
@@ -86,6 +94,7 @@ int startNetworkServer(){
         
         pthread_create( &tcpWorkerThreads[i], NULL, (void *) tcpWorker, &packages[i]);
     }
+    return 0;
 }
 
 //--------------------------------------------------------------------------

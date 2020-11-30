@@ -24,11 +24,17 @@
 #include "lsm6ds33.h"
 #include "lis3mdl.h"
 
+/**
+ * variable declarations
+ */
+int FD_ImuIIC;
+sem_t sem_startPololuMeasure;
+sem_t sem_PololuMeasureDone;
 
 /* ************************************************************************** */
 // open I2C-0 device 
 /* ************************************************************************** */
-int open_iic_device(){
+void open_iic_device(){
 
 	// Open the device.
 	FD_ImuIIC = open(POLOLU_V5_I2C, O_RDWR);
@@ -40,7 +46,7 @@ int open_iic_device(){
 }
 
 /* ************************************************************************** */
-/** configure, initialize the Pololu v5 IMU */
+// configure, initialize the Pololu v5 IMU */
 /* ************************************************************************** */
 void init_pololu_v5(){
     open_iic_device();
@@ -51,7 +57,7 @@ void init_pololu_v5(){
 }
 
 /* ************************************************************************** */
-/** init semaphores */
+// init semaphores */
 /* ************************************************************************** */
 void initPololuSemaphores(){
 	// semaphore to let the pololu sensor starts to measure
@@ -69,7 +75,7 @@ void initPololuSemaphores(){
 }
 
 /* ************************************************************************** */
-/** 
+// 
 /* ************************************************************************** */
 pthread_t pololu_thread;
 void startPololuMeasure(){
@@ -78,7 +84,7 @@ void startPololuMeasure(){
 
 
 /* ************************************************************************** */
-/**
+//
 /* ************************************************************************** */
 int pololuThread(void * ptr){
 	while(1){
@@ -91,7 +97,7 @@ int pololuThread(void * ptr){
 
 
 /* ************************************************************************** */
-/** measure */
+// measure
 /* ************************************************************************** */
 void pololuMeasure(){
 	lsm6ds33_measure();

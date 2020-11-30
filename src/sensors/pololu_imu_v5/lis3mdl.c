@@ -50,6 +50,12 @@ enum LIS3MDLRegAddr
     LIS3MDL_INT_THS_H   = 0x33,
 };
 
+/**
+ * variable declarations
+ */
+struct magnSensor3AxeData magnm;
+int magn_temperature;
+
 
 /* ************************************************************************** */
 // 

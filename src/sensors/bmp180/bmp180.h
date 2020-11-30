@@ -15,9 +15,9 @@
 
 /************************** Variable Definitions *****************************/
 //FileDescriptor of the IIC-1 device (BMP180)
-int FD_BMP180IIC;
-sem_t sem_startBmp180Measure;
-sem_t sem_Bmp180MeasureDone;
+extern int FD_BMP180IIC;
+extern sem_t sem_startBmp180Measure;
+extern sem_t sem_Bmp180MeasureDone;
 
 typedef struct {
     short ac1,ac2,ac3;
@@ -25,10 +25,10 @@ typedef struct {
     short b1,b2,mb,mc,md;
 } barometerParams;
 
-barometerParams barom_params;
+extern barometerParams barom_params;
 
 
-int open_iic1_device(void);
+void open_iic1_device(void);
 void init_bmp180(void);
 void init_bmp180_chip(void);
 void select_slave_bmp180(void);

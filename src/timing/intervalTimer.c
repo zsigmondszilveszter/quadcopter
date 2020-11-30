@@ -64,7 +64,7 @@ void initTimer(){
         printErrno();
         exit(errno);
     }
-    printf(">> Interval Timer created, timerid: %d\n", intervalTimerID);
+    printf(">> Interval Timer created, timerid: %d\n", (int)intervalTimerID);
 }
 
 /* ************************************************************************** */

@@ -132,10 +132,8 @@ __s16 read2_i2c_registerLSB(int fd, char r_addr){
 	if (res < 0) {
 		/* ERROR HANDLING: i2c transaction failed */
 		fprintf(stderr, "Cannot read IIC slave REG, errno: %d, res: %d\n", errno, res);
-	} else {
-		/* res contains the read word */
-		return (__s16) res;
 	}
+    return (__s16) res;
 }
 
 /* ************************************************************************** *

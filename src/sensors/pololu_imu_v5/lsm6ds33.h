@@ -14,9 +14,10 @@ struct imuSensor3AxeData{
     int16_t x;
     int16_t y;
     int16_t z;
-} gyro, accel;
+};
 
-float temperature;
+extern struct imuSensor3AxeData gyro, accel;
+extern float temperature;
 
 void init_lsm6ds33(void);
 void select_slave_lsm6ds33(void);

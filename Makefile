@@ -4,9 +4,9 @@ SDIR=src
 IDIR =$(SDIR)/includes
 SENSORS_DIR =$(SDIR)/sensors
 CC=gcc
-#CC=clang
 MKDIR=mkdir
-CFLAGS=-std=c99 -I$(IDIR) -I$(SENSORS_DIR) -lm -lrt
+LINKER_LIBRARIES= -lm -lrt
+CFLAGS=-std=c99 -I$(IDIR) -I$(SENSORS_DIR)
 LIBS=-pthread
 
 # store object files in this directory
@@ -52,18 +52,18 @@ _HEADERS = state_machine.h
 HEADERS_DEPS = $(patsubst %,$(IDIR)/%,$(_HEADERS))
 # every object file depends on the certain .c file and the certain header files too
 $(ODIR)/%.o: $(SDIR)/%.c $(HEADERS_DEPS)
-	$(CC) -O2 -c -o $@ $< $(CFLAGS) $(LIBS)
+	$(CC) -O2 -c -o $@ $< $(CFLAGS) $(LIBS) 
 
 #
 $(OBJ): | CreateObjDir
 
 # the first and default make rule, this links the object files and builds the ELF file with the name of the rule
 dev: $(OBJ) 
-	$(CC) -o qc_server_$@ $^ $(CFLAGS) $(LIBS)
+	$(CC) -o qc_server_$@ $^ $(CFLAGS) $(LIBS) $(LINKER_LIBRARIES)
 
 # production build
 prod: $(OBJ)
-	$(CC) -O2 -o qc_server_$@ $^ $(CFLAGS) $(LIBS)
+	$(CC) -O2 -o qc_server_$@ $^ $(CFLAGS) $(LIBS) $(LINKER_LIBRARIES)
 
 .PHONY: clean
 # clean the project directory from the object files and temporary stuffs

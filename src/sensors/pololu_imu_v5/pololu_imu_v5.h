@@ -18,12 +18,12 @@
 
 /************************** Variable Definitions *****************************/
 //FileDescriptor of the IIC-0 device (Pololu IMU v5 connected to IIC-0)
-int FD_ImuIIC;
-sem_t sem_startPololuMeasure;
-sem_t sem_PololuMeasureDone;
+extern int FD_ImuIIC;
+extern sem_t sem_startPololuMeasure;
+extern sem_t sem_PololuMeasureDone;
 
 
-int open_iic_device(void);
+void open_iic_device(void);
 void init_pololu_v5(void);
 void initPololuSemaphores(void);
 void startPololuMeasure(void);
